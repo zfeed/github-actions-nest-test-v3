@@ -1,4 +1,4 @@
-import Entity from './Entity';
+import Entity from '../common/Entity';
 
 class Player extends Entity<never> {
     private score = 0;

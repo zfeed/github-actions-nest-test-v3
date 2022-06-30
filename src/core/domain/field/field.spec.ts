@@ -1,9 +1,9 @@
 import * as dayjs from 'dayjs';
 
 import Field from './Field';
-import MarkedCellHitEvent from './events/MarkedCellHitEvent';
-import FieldMarkedCellPositionChanged from './events/FieldMarkedCellPositionChanged';
-import Session from './Session';
+import MarkedCellHitEvent from './MarkedCellHitEvent';
+import FieldMarkedCellPositionChanged from './FieldMarkedCellPositionChanged';
+import Session from '../common/Session';
 
 describe('Field', () => {
     test('Field is created', () => {

@@ -12,11 +12,10 @@
                 "<node_internals>/**"
             ],
             "runtimeExecutable": "/Users/roman/.nvm/versions/node/v16.13.2/bin/node",
-            "program": "${workspaceFolder}/src/index.ts",
+            "program": "${workspaceFolder}/src/main.ts",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
-            "preLaunchTask": 
         }
     ]
 }

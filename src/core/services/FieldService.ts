@@ -1,20 +1,23 @@
 import { randomUUID } from 'node:crypto';
+import { Injectable } from '@nestjs/common';
+import { EntityManager } from '@mikro-orm/sqlite';
 
-import Field from '../domain/Field';
-import FieldRepository from '../repositories/FieldRepository';
-import DomainEventDispatcher from '../DomainEventDispatcher';
-import GameStartedEvent from '../domain/events/GameStartedEvent';
-import Session from '../domain/Session';
+import Field from '../domain/field/Field';
+import DomainEventDispatcher from '../../DomainEventDispatcher';
+import GameStartedEvent from '../domain/game/GameStartedEvent';
+import Session from '../domain/common/Session';
 
+@Injectable()
 class FieldService {
-    static hit(
-        fieldId: string,
-        index: number,
-        playerId: string,
-        domainEventDispatcher: DomainEventDispatcher,
-        fieldRepository: FieldRepository
-    ) {
-        const field = fieldRepository.getById(fieldId);
+    constructor(
+        private em: EntityManager,
+        private domainEventDispatcher: DomainEventDispatcher
+    ) {}
+
+    async hit(fieldId: string, index: number, playerId: string) {
+        const fieldRepository = this.em.getRepository(Field);
+
+        const field = await fieldRepository.findOne(fieldId);
 
         if (!field) {
             throw new Error('Field does not exist');
@@ -22,17 +25,17 @@ class FieldService {
 
         field.hit(index, playerId, new Date());
 
-        field.events.forEach((event) => domainEventDispatcher.dispatch(event));
+        await fieldRepository.flush();
 
-        fieldRepository.save(field);
+        field.events.forEach((event) =>
+            this.domainEventDispatcher.dispatch(event)
+        );
     }
 
-    static changeMarkedCellPosition(
-        fieldId: string,
-        domainEventDispatcher: DomainEventDispatcher,
-        fieldRepository: FieldRepository
-    ) {
-        const field = fieldRepository.getById(fieldId);
+    async changeMarkedCellPosition(fieldId: string) {
+        const fieldRepository = this.em.getRepository(Field);
+
+        const field = await fieldRepository.findOne(fieldId);
 
         if (!field) {
             throw new Error('Field does not exist');
@@ -40,15 +43,14 @@ class FieldService {
 
         field.changeMarkedCellPosition(new Date());
 
-        field.events.forEach((event) => domainEventDispatcher.dispatch(event));
+        await fieldRepository.flush();
 
-        fieldRepository.save(field);
+        field.events.forEach((event) =>
+            this.domainEventDispatcher.dispatch(event)
+        );
     }
 
-    static hundleGameStartedEvent(
-        event: GameStartedEvent,
-        fieldRepository: FieldRepository
-    ) {
+    async hundleGameStartedEvent(event: GameStartedEvent) {
         const session = Session.create(event.minutesToPlay, event.startedAt);
 
         const field = Field.create(
@@ -59,7 +61,9 @@ class FieldService {
             session
         );
 
-        fieldRepository.save(field);
+        const fieldRepository = this.em.getRepository(Field);
+
+        await fieldRepository.persistAndFlush(field);
     }
 }
 

@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import Game from '../../core/domain/Game';
+import Game from '../../core/domain/game/Game';
 import { IEntity } from './entity';
 
 interface IGame {

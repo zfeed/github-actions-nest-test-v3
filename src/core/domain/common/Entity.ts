@@ -12,9 +12,10 @@ class Entity<E extends Event> {
     // eslint-disable-next-line no-useless-constructor
     protected constructor(readonly id: string) {}
 
-    pushEvent(event: E) {
+    protected pushEvent(event: E) {
         this.#events.push(event);
     }
 }
 
 export default Entity;
+export { Entity };

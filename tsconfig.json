@@ -14,6 +14,8 @@
       "noUnusedParameters": true,
       "module": "CommonJS",
       "sourceMap": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "resolveJsonModule": true,
       "outDir": "./dist",
   },

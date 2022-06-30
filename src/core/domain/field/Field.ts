@@ -1,11 +1,11 @@
-import Entity from './Entity';
-import Game from './Game';
-import MarkedCellHitEvent from './events/MarkedCellHitEvent';
-import FieldMarkedCellPositionChanged from './events/FieldMarkedCellPositionChanged';
-import Player from './Player';
-import Session from './Session';
+import Entity from '../common/Entity';
+import Game from '../game/Game';
+import MarkedCellHitEvent from './MarkedCellHitEvent';
+import FieldMarkedCellPositionChanged from './FieldMarkedCellPositionChanged';
+import Player from '../game/Player';
+import Session from '../common/Session';
 
-export default class Field extends Entity<
+class Field extends Entity<
     MarkedCellHitEvent | FieldMarkedCellPositionChanged
 > {
     protected constructor(
@@ -118,3 +118,5 @@ export default class Field extends Entity<
         );
     }
 }
+
+export default Field;

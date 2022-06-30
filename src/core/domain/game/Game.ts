@@ -1,7 +1,7 @@
 import Player from './Player';
-import Entity from './Entity';
-import Session from './Session';
-import GameStartedEvent from './events/GameStartedEvent';
+import Entity from '../common/Entity';
+import Session from '../common/Session';
+import GameStartedEvent from './GameStartedEvent';
 
 class Game extends Entity<GameStartedEvent> {
     private constructor(
