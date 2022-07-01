@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 import Field from '../domain/field/Field';
-import DomainEventDispatcher from '../../DomainEventDispatcher';
 import GameStartedEvent from '../domain/game/GameStartedEvent';
 import Session from '../domain/common/Session';
 
@@ -11,7 +11,7 @@ import Session from '../domain/common/Session';
 class FieldService {
     constructor(
         private em: EntityManager,
-        private domainEventDispatcher: DomainEventDispatcher
+        private domainEventDispatcher: EventEmitter2
     ) {}
 
     async hit(fieldId: string, index: number, playerId: string) {
@@ -28,7 +28,7 @@ class FieldService {
         await fieldRepository.flush();
 
         field.events.forEach((event) =>
-            this.domainEventDispatcher.dispatch(event)
+            this.domainEventDispatcher.emit(event.type, event)
         );
     }
 
@@ -46,7 +46,7 @@ class FieldService {
         await fieldRepository.flush();
 
         field.events.forEach((event) =>
-            this.domainEventDispatcher.dispatch(event)
+            this.domainEventDispatcher.emit(event.type, event)
         );
     }
 

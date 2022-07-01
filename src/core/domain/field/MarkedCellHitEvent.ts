@@ -1,5 +1,7 @@
 import Game from '../game/Game';
 
+const TYPE = 'MARKED_CELL_HIT' as const;
+
 export default class MarkedCellHitEvent {
     public readonly playerId: string;
 
@@ -7,7 +9,8 @@ export default class MarkedCellHitEvent {
 
     public readonly gameId: Game['id'];
 
-    public readonly type: 'MARKED_CELL_HIT' = 'MARKED_CELL_HIT';
+    public readonly type = TYPE;
+    static readonly type = TYPE;
 
     constructor(playerId: string, gameId: Game['id'], cellPosition: number) {
         this.playerId = playerId;

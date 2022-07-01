@@ -1,5 +1,8 @@
+const TYPE = 'GAME_STARTED' as const;
+
 export default class GameStartedEvent {
-    public readonly type: 'GAME_STARTED' = 'GAME_STARTED';
+    public readonly type = TYPE;
+    static readonly type = TYPE;
 
     public readonly startedAt: Date;
 

@@ -1,6 +1,8 @@
+const TYPE = 'FIELD_MARKED_CELL_POSITION_CHANGED' as const;
+
 export default class FieldMarkedCellPositionChanged {
-    public readonly type: 'FIELD_MARKED_CELL_POSITION_CHANGED' =
-        'FIELD_MARKED_CELL_POSITION_CHANGED';
+    public readonly type = TYPE;
+    static readonly type = TYPE;
 
     public readonly newMarkedCellPosition: number;
 

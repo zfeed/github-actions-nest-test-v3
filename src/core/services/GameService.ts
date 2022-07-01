@@ -1,17 +1,17 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 import Game from '../domain/game/Game';
 import Player from '../domain/game/Player';
-import DomainEventDispatcher from '../../DomainEventDispatcher';
 import MarkedCellHitEvent from '../domain/field/MarkedCellHitEvent';
 
 @Injectable()
 class GameService {
     constructor(
         private em: EntityManager,
-        private domainEventDispatcher: DomainEventDispatcher
+        private domainEventDispatcher: EventEmitter2
     ) {}
 
     async create(playerName: string) {
@@ -43,7 +43,7 @@ class GameService {
         await gameRepository.flush();
 
         game.events.forEach((event) =>
-            this.domainEventDispatcher.dispatch(event)
+            this.domainEventDispatcher.emit(event.type, event)
         );
 
         return {

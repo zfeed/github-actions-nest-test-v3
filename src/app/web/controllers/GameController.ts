@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Param } from '@nestjs/common';
 
-import GameService from '../../core/services/GameService';
+import GameService from '../../../core/services/GameService';
 
 @Controller('game')
 export default class GameController {
