@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Param } from '@nestjs/common';
 
-import FieldService from '../../../core/services/FieldService';
+import FieldService from '../../../core/services/FieldService/FieldService';
 
 @Controller('field')
 export default class FieldController {

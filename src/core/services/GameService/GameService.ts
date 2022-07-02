@@ -3,9 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
-import Game from '../domain/game/Game';
-import Player from '../domain/game/Player';
-import MarkedCellHitEvent from '../domain/field/MarkedCellHitEvent';
+import Game from '../../domain/game/Game';
+import Player from '../../domain/game/Player';
+import MarkedCellHitEvent from '../../domain/field/MarkedCellHitEvent';
+import CreateResult from './results/CreateResult';
+import * as JoinResults from './results/JoinResult';
 
 @Injectable()
 class GameService {
@@ -14,7 +16,7 @@ class GameService {
         private domainEventDispatcher: EventEmitter2
     ) {}
 
-    async create(playerName: string) {
+    async create(playerName: string): Promise<CreateResult> {
         const gameRepository = this.em.getRepository(Game);
 
         const player = Player.create(randomUUID(), playerName);
@@ -22,10 +24,7 @@ class GameService {
 
         await gameRepository.persistAndFlush(game);
 
-        return {
-            gameId: game.id,
-            playerId: player.id
-        };
+        return CreateResult.create(game);
     }
 
     async join(playerName: string, gameId: string) {
@@ -33,7 +32,15 @@ class GameService {
         const game = await gameRepository.findOne(gameId);
 
         if (!game) {
-            throw new Error('Game does not exist');
+            return JoinResults.GameNotFoundResult.create();
+        }
+
+        if (game.isGameStarted()) {
+            return JoinResults.GameAlreadyStartedResult.create();
+        }
+
+        if (game.allPlayersJoined()) {
+            return JoinResults.GameIsFullResult.create();
         }
 
         const player = Player.create(randomUUID(), playerName);
@@ -46,9 +53,7 @@ class GameService {
             this.domainEventDispatcher.emit(event.type, event)
         );
 
-        return {
-            playerId: player.id
-        };
+        return JoinResults.GameJoinedResult.create(game, player);
     }
 
     async hundleMarkedCellHitEvent(event: MarkedCellHitEvent) {

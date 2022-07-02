@@ -57,8 +57,12 @@ class Field extends Entity<
         return this.markedCellPosition;
     }
 
+    playerExists(playerId: string) {
+        return this.playerIds.includes(playerId);
+    }
+
     hit(cellPosition: number, playerId: string, now: Date) {
-        if (this.playerIds.includes(playerId) === false) {
+        if (this.playerExists(playerId) === false) {
             throw new Error('Player does not exits');
         }
 

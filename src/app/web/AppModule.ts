@@ -4,8 +4,8 @@ import { Module } from '@nestjs/common';
 
 import GameController from './controllers/GameController';
 import FieldController from './controllers/FieldController';
-import GameService from '../../core/services/GameService';
-import FieldService from '../../core/services/FieldService';
+import GameService from '../../core/services/GameService/GameService';
+import FieldService from '../../core/services/FieldService/FieldService';
 
 import FieldMarkedCellPositionChangedListner from './listeners/FieldMarkedCellPositionChangedListner';
 import GameStartedEventListner from './listeners/GameStartedEventListner';

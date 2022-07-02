@@ -3,9 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
-import Field from '../domain/field/Field';
-import GameStartedEvent from '../domain/game/GameStartedEvent';
-import Session from '../domain/common/Session';
+import Field from '../../domain/field/Field';
+import GameStartedEvent from '../../domain/game/GameStartedEvent';
+import Session from '../../domain/common/Session';
+import * as HitResult from './results/HitResult';
 
 @Injectable()
 class FieldService {
@@ -20,7 +21,11 @@ class FieldService {
         const field = await fieldRepository.findOne(fieldId);
 
         if (!field) {
-            throw new Error('Field does not exist');
+            return HitResult.FieldNotFoundResult.create();
+        }
+
+        if (field.playerExists(playerId) === false) {
+            return HitResult.PlayerDoesNotExistResult.create();
         }
 
         field.hit(index, playerId, new Date());
@@ -30,6 +35,8 @@ class FieldService {
         field.events.forEach((event) =>
             this.domainEventDispatcher.emit(event.type, event)
         );
+
+        return HitResult.HitResult.create(field);
     }
 
     async changeMarkedCellPosition(fieldId: string) {

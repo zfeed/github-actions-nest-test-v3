@@ -4,7 +4,7 @@ import FieldMarkedCellPositionChanged from '../../../core/domain/field/FieldMark
 
 @Injectable()
 export default class FieldMarkedCellPositionChangedListner {
-    @OnEvent(FieldMarkedCellPositionChanged.type)
+    @OnEvent(FieldMarkedCellPositionChanged.type, { async: true })
     handle(event: FieldMarkedCellPositionChanged) {
         console.log(event);
     }
