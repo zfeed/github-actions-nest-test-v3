@@ -2,7 +2,6 @@ import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-
 import Game from '../../domain/game/Game';
 import Player from '../../domain/game/Player';
 import MarkedCellHitEvent from '../../domain/field/MarkedCellHitEvent';

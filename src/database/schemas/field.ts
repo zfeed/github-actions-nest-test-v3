@@ -8,6 +8,7 @@ interface IField {
     markedCellPosition: Field['markedCellPosition'];
     playerIds: Field['playerIds'];
     session: Field['session'];
+    version: number;
 }
 
 export default new EntitySchema<IField, IEntity>({
@@ -20,6 +21,7 @@ export default new EntitySchema<IField, IEntity>({
         size: { type: types.smallint, unsigned: true },
         markedCellPosition: { type: types.smallint, unsigned: true },
         playerIds: { type: types.array },
+        version: { type: 'integer', version: true },
         session: {
             reference: 'embedded',
             entity: 'Session'

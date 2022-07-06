@@ -6,6 +6,7 @@ interface IGame {
     players: Game['players'];
     session: Game['session'];
     maxPlayers: Game['maxPlayers'];
+    version: number;
 }
 
 export default new EntitySchema<IGame, IEntity>({
@@ -14,6 +15,7 @@ export default new EntitySchema<IGame, IEntity>({
     class: Game,
     extends: 'Entity',
     properties: {
+        version: { type: 'integer', version: true },
         players: { reference: 'embedded', entity: 'Player', array: true },
         maxPlayers: { type: types.smallint, unsigned: true },
         session: {
