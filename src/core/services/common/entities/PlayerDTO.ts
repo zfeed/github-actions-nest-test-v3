@@ -1,11 +1,19 @@
+import { ApiProperty } from '@nestjs/swagger';
 import Player from '../../../domain/game/Player';
 
 export default class PlayerDTO {
-    private constructor(
-        public readonly id: string,
-        public readonly name: string,
-        public readonly score: number
-    ) {}
+    @ApiProperty()
+    public readonly id: string;
+    @ApiProperty()
+    public readonly name: string;
+    @ApiProperty()
+    public readonly score: number;
+
+    private constructor(id: string, name: string, score: number) {
+        this.id = id;
+        this.name = name;
+        this.score = score;
+    }
 
     static create(player: Player) {
         return new this(player.id, player.name, player.getScore());

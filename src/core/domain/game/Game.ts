@@ -2,6 +2,7 @@ import Player from './Player';
 import Entity from '../common/Entity';
 import Session from '../common/Session';
 import GameStartedEvent from './GameStartedEvent';
+import { MINUTES_TO_PLAY } from '../../constants';
 
 class Game extends Entity<GameStartedEvent> {
     private constructor(
@@ -22,12 +23,11 @@ class Game extends Entity<GameStartedEvent> {
     }
 
     private start(now: Date): void {
-        const minutesToPlay = 1;
-        this.session = Session.create(minutesToPlay, now);
+        this.session = Session.create(MINUTES_TO_PLAY, now);
 
         this.pushEvent(
             new GameStartedEvent(
-                minutesToPlay,
+                MINUTES_TO_PLAY,
                 this.session.startedAt,
                 this.id,
                 this.players.map(({ id }) => id)

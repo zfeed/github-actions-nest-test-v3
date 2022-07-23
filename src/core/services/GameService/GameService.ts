@@ -7,6 +7,7 @@ import Player from '../../domain/game/Player';
 import MarkedCellHitEvent from '../../domain/field/MarkedCellHitEvent';
 import CreateResult from './results/CreateResult';
 import * as JoinResults from './results/JoinResult';
+import { MAX_PLAYERS } from '../../constants';
 
 @Injectable()
 class GameService {
@@ -19,7 +20,7 @@ class GameService {
         const gameRepository = this.em.getRepository(Game);
 
         const player = Player.create(randomUUID(), playerName);
-        const game = Game.create(randomUUID(), player, 2);
+        const game = Game.create(randomUUID(), player, MAX_PLAYERS);
 
         await gameRepository.persistAndFlush(game);
 

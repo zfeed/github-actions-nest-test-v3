@@ -7,6 +7,7 @@ import Field from '../../domain/field/Field';
 import GameStartedEvent from '../../domain/game/GameStartedEvent';
 import Session from '../../domain/common/Session';
 import * as HitResult from './results/HitResult';
+import { FIELD_SIZE } from '../../constants';
 
 @Injectable()
 class FieldService {
@@ -64,7 +65,7 @@ class FieldService {
             randomUUID(),
             event.playersId,
             event.gameId,
-            16,
+            FIELD_SIZE,
             session
         );
 
