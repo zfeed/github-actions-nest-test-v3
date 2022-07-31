@@ -9,7 +9,7 @@ describe('Game', () => {
     test('Game is created', () => {
         const game = Game.create('1', Player.create('1', 'playerName'), 2);
 
-        expect(game.getSession()).toBe(null);
+        expect(game.getSession()).toBe(undefined);
         expect(game.getPlayers()).toEqual([Player.create('1', 'playerName')]);
         expect(game.id).toBe('1');
         expect(game.getMaxPlayers()).toBe(2);
