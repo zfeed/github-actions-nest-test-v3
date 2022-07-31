@@ -1,9 +1,9 @@
 import * as dayjs from 'dayjs';
 
-import Game from './Game';
-import Player from './Player';
-import GameStartedEvent from './GameStartedEvent';
-import Session from '../common/Session';
+import Game from '../../src/core/domain/game/Game';
+import Player from '../../src/core/domain/game/Player';
+import GameStartedEvent from '../../src/core/domain/game/GameStartedEvent';
+import Session from '../../src/core/domain/common/Session';
 
 describe('Game', () => {
     test('Game is created', () => {
