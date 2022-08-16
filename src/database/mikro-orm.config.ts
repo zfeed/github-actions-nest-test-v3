@@ -7,7 +7,7 @@ import player from './schemas/player';
 
 const options: Options = {
     type: 'sqlite',
-    dbName: 'humsters.db',
+    dbName: process.NODE_ENV === 'test' ? 'humsters.test.db' : 'humsters.db',
     entities: [field, session, entity, game, player]
 };
 

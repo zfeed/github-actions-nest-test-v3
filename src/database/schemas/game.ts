@@ -15,7 +15,7 @@ export default new EntitySchema<IGame, IEntity>({
     class: Game,
     extends: 'Entity',
     properties: {
-        version: { type: 'integer', version: true },
+        version: { type: 'number', version: true },
         players: { reference: 'embedded', entity: 'Player', array: true },
         maxPlayers: { type: types.smallint, unsigned: true },
         session: {

@@ -6,5 +6,6 @@ module.exports = {
     },
     collectCoverageFrom: ['**/*.(t|j)s'],
     coverageDirectory: '../coverage',
+    setupFilesAfterEnv: ['jest-extended/all'],
     testEnvironment: 'node'
 };
