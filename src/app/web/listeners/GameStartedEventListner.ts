@@ -3,7 +3,6 @@ import { OnEvent } from '@nestjs/event-emitter';
 import GameStartedEvent from '../../../core/domain/game/GameStartedEvent';
 import FieldService from '../../../core/services/FieldService/FieldService';
 import ServerSentEvents from '../ServerSentEvents/ServerSentEvents';
-import * as utils from '../utils';
 
 @Injectable()
 export default class MarkedCellHitEventListner {
@@ -13,10 +12,7 @@ export default class MarkedCellHitEventListner {
     ) {}
     @OnEvent(GameStartedEvent.type, { async: true })
     handle(event: GameStartedEvent) {
-        this.serverSentEvents.broadсast(
-            utils.createNamespace(event.gameId),
-            event
-        );
+        this.serverSentEvents.broadсast(event.gameId, event);
         return this.fieldService.hundleGameStartedEvent(event);
     }
 }
