@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Param } from '@nestjs/common';
 import { ApiParam, ApiResponse, ApiExtraModels, refs } from '@nestjs/swagger';
-import GameService from '../../../../core/services/GameService/GameService';
+import GameService from '../../../core/services/GameService/GameService';
 import CreateGameDTO from './CreateGameDTO';
 import JoinGameDTO from './JoinGameDTO';
-import CreateResult from '../../../../core/services/GameService/results/CreateResult';
-import * as JoinResult from '../../../../core/services/GameService/results/JoinResult';
+import CreateResult from '../../../core/services/GameService/results/CreateResult';
+import * as JoinResult from '../../../core/services/GameService/results/JoinResult';
 
 @Controller('game')
 @ApiExtraModels(

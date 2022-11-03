@@ -1,9 +1,9 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import FieldService from '../../src/core/services/FieldService/FieldService';
-import GameStartedEvent from '../../src/core/domain/game/GameStartedEvent';
-import Field from '../../src/core/domain/field/Field';
+import FieldService from '../../src/game/core/services/FieldService/FieldService';
+import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
+import Field from '../../src/game/core/domain/field/Field';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

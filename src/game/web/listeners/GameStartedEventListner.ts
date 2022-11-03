@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import GameStartedEvent from '../../../core/domain/game/GameStartedEvent';
-import FieldService from '../../../core/services/FieldService/FieldService';
+import GameStartedEvent from '../../core/domain/game/GameStartedEvent';
+import FieldService from '../../core/services/FieldService/FieldService';
 import ServerSentEvents from '../ServerSentEvents/ServerSentEvents';
 
 @Injectable()

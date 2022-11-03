@@ -1,9 +1,9 @@
 import { Controller, Post, Body, Param } from '@nestjs/common';
 import { ApiParam, ApiExtraModels, ApiResponse, refs } from '@nestjs/swagger';
 
-import FieldService from '../../../../core/services/FieldService/FieldService';
+import FieldService from '../../../core/services/FieldService/FieldService';
 import HitPositionInFieldDTO from './HitPositionInFieldDTO';
-import * as HitResult from '../../../../core/services/FieldService/results/HitResult';
+import * as HitResult from '../../../core/services/FieldService/results/HitResult';
 
 @Controller('field')
 @ApiExtraModels(

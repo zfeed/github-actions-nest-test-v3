@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import FieldMarkedCellPositionChanged from '../../../core/domain/field/FieldMarkedCellPositionChanged';
+import FieldMarkedCellPositionChanged from '../../core/domain/field/FieldMarkedCellPositionChanged';
 import ServerSentEvents from '../ServerSentEvents/ServerSentEvents';
 
 @Injectable()

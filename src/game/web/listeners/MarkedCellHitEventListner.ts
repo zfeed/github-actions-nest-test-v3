@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import MarkedCellHitEvent from '../../../core/domain/field/MarkedCellHitEvent';
-import GameService from '../../../core/services/GameService/GameService';
+import MarkedCellHitEvent from '../../core/domain/field/MarkedCellHitEvent';
+import GameService from '../../core/services/GameService/GameService';
 
 @Injectable()
 export default class MarkedCellHitEventListner {

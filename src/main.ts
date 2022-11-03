@@ -1,4 +1,4 @@
-import bootstrapWeb from './app/web/bootstrap';
+import bootstrapWeb from './game/web/bootstrap';
 
 async function main() {
     await bootstrapWeb();
