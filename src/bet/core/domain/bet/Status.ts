@@ -1,4 +1,4 @@
-enum code {
+export enum code {
     ACTIVE,
     FINISHED
 }
@@ -10,6 +10,10 @@ class Status {
 
     getValue() {
         return this.value;
+    }
+
+    isFinished() {
+        return this.value === code.FINISHED;
     }
 
     public static create(value: code): Status {

@@ -19,7 +19,7 @@ class Bet extends Entity<BetFinishedEvent> {
     }
 
     getStatus() {
-        this.status;
+        return this.status;
     }
 
     getWinnerPlayerId() {
