@@ -125,7 +125,10 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
                 MINUTES_TO_PLAY,
                 this.session!.startedAt,
                 this.id,
-                this.players.map(({ id }) => id),
+                this.players.map((player) => ({
+                    id: player.id,
+                    score: player.getScore()
+                })),
                 this.finishedAt
             )
         );

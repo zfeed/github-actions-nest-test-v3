@@ -11,19 +11,19 @@ export default class GameFinishedEvent {
 
     public readonly gameId: string;
 
-    public readonly playersId: string[];
+    public readonly players: { id: string; score: number }[];
 
     constructor(
         minutesToPlay: number,
         startedAt: Date,
         gameId: string,
-        playersId: string[],
+        players: { id: string; score: number }[],
         finishedAt: Date
     ) {
         this.minutesToPlay = minutesToPlay;
         this.startedAt = startedAt;
         this.finishedAt = finishedAt;
         this.gameId = gameId;
-        this.playersId = playersId;
+        this.players = players;
     }
 }
