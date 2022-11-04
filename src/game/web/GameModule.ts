@@ -26,4 +26,4 @@ import ServerSentEvents from './ServerSentEvents/ServerSentEvents';
         ServerSentEvents
     ]
 })
-export default class AppModule {}
+export default class GameModule {}
