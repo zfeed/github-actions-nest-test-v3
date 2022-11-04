@@ -3,7 +3,9 @@ import * as dayjs from 'dayjs';
 import Game from '../../src/game/core/domain/game/Game';
 import Player from '../../src/game/core/domain/game/Player';
 import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
+import GameFinishedEvent from '../../src/game/core/domain/game/GameFinishedEvent';
 import Session from '../../src/game/core/domain/common/Session';
+import { MINUTES_TO_PLAY } from '../../src/game/core/constants';
 
 describe('Game', () => {
     test('Game is created', () => {
@@ -27,7 +29,7 @@ describe('Game', () => {
         const now = new Date();
         const game = Game.create('game123', Player.create('1', 'John'), 2);
 
-        game.join(Player.create('2', 'Mike'), new Date());
+        game.join(Player.create('2', 'Mike'), now);
 
         expect(game.getSession()).toEqual(Session.create(1, now));
         expect(game.getPlayers()).toEqual([
@@ -88,5 +90,48 @@ describe('Game', () => {
         expect(() =>
             game.join(Player.create('3', 'Mike'), new Date())
         ).toThrow();
+    });
+
+    test("Game can't be finished if it's not started yet", () => {
+        const game = Game.create('1', Player.create('1', 'John'), 2);
+
+        expect(game.getSession()).toBe(undefined);
+        expect(() => game.finish(new Date())).toThrow();
+    });
+
+    test("Game can't be finished if it's started but not over yet", () => {
+        const game = Game.create('1', Player.create('1', 'John'), 2);
+
+        game.join(Player.create('2', 'Mike'), new Date());
+
+        expect(game.getSession()).toBeTruthy();
+        expect(game.getSession()!.isOver(new Date())).toBeFalse();
+        expect(() => game.finish(new Date())).toThrow();
+    });
+
+    test('Game can be finished only one time', async () => {
+        const game = Game.create('1', Player.create('1', 'John'), 2);
+        const past = dayjs().subtract(MINUTES_TO_PLAY, 'minutes').toDate();
+
+        game.join(Player.create('2', 'Mike'), past);
+        game.finish(new Date());
+
+        expect(() => game.finish(new Date())).toThrow();
+    });
+
+    test('Game finishes correctly', async () => {
+        const game = Game.create('1', Player.create('1', 'John'), 2);
+        const past = dayjs().subtract(MINUTES_TO_PLAY, 'minutes').toDate();
+        const now = new Date();
+
+        game.join(Player.create('2', 'Mike'), past);
+        game.finish(now);
+
+        expect(game.getFinishedAt()).toBe(now);
+        expect(game.isFinished()).toBeTrue();
+        expect(game.events).toEqual([
+            new GameStartedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2']),
+            new GameFinishedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2'], now)
+        ]);
     });
 });

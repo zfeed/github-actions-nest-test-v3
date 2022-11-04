@@ -46,6 +46,10 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
         return this.finishedAt !== null;
     }
 
+    getFinishedAt() {
+        return this.finishedAt;
+    }
+
     getSession(): Readonly<Session | undefined> {
         return this.session;
     }
@@ -110,7 +114,7 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
             throw new Error('Game is not over yet');
         }
 
-        if (this.isFinished() !== null) {
+        if (this.isFinished() === true) {
             throw new Error('Game is finished already');
         }
 
