@@ -7,6 +7,7 @@ interface IGame {
     session: Game['session'];
     maxPlayers: Game['maxPlayers'];
     version: number;
+    finishedAt: Game['finishedAt'];
 }
 
 export default new EntitySchema<IGame, IEntity>({
@@ -18,6 +19,7 @@ export default new EntitySchema<IGame, IEntity>({
         version: { type: 'number', version: true },
         players: { reference: 'embedded', entity: 'Player', array: true },
         maxPlayers: { type: types.smallint, unsigned: true },
+        finishedAt: { type: types.datetime },
         session: {
             reference: 'embedded',
             entity: 'Session',
