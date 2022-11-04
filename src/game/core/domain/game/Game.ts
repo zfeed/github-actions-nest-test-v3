@@ -41,6 +41,7 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
         return this.maxPlayers;
     }
 
+    // TODO: add this-based type guards
     isFinished() {
         return this.finishedAt !== null;
     }
@@ -71,6 +72,7 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
         player.increaseScoreBy(1);
     }
 
+    // TODO: add this-based type guards
     isGameStarted() {
         return this.session !== undefined;
     }
