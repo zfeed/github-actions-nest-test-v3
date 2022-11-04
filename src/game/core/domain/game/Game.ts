@@ -2,14 +2,16 @@ import Player from './Player';
 import Entity from '../common/Entity';
 import Session from '../common/Session';
 import GameStartedEvent from './GameStartedEvent';
+import GameFinishedEvent from './GameFinishedEvent';
 import { MINUTES_TO_PLAY } from '../../constants';
 
-class Game extends Entity<GameStartedEvent> {
+class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
     private constructor(
         id: Game['id'],
         private players: Player[],
         private session: Session | undefined,
-        public readonly maxPlayers: number
+        public readonly maxPlayers: number,
+        private finishedAt: null | Date
     ) {
         super(id);
     }
@@ -37,6 +39,10 @@ class Game extends Entity<GameStartedEvent> {
 
     getMaxPlayers(): number {
         return this.maxPlayers;
+    }
+
+    isFinished() {
+        return this.finishedAt !== null;
     }
 
     getSession(): Readonly<Session | undefined> {
@@ -93,6 +99,32 @@ class Game extends Entity<GameStartedEvent> {
         }
     }
 
+    finish(now: Date) {
+        if (this.isGameStarted() === false) {
+            throw new Error('Game not started yet');
+        }
+
+        if (this.session?.isOver(now) === false) {
+            throw new Error('Game is not over yet');
+        }
+
+        if (this.isFinished() !== null) {
+            throw new Error('Game is finished already');
+        }
+
+        this.finishedAt = now;
+
+        this.pushEvent(
+            new GameFinishedEvent(
+                MINUTES_TO_PLAY,
+                this.session!.startedAt,
+                this.id,
+                this.players.map(({ id }) => id),
+                this.finishedAt
+            )
+        );
+    }
+
     static create(
         gameId: Game['id'],
         player: Player,
@@ -102,7 +134,7 @@ class Game extends Entity<GameStartedEvent> {
             throw new Error('Player must have 0 score');
         }
 
-        return new Game(gameId, [player], undefined, maxPlayers);
+        return new Game(gameId, [player], undefined, maxPlayers, null);
     }
 }
 
