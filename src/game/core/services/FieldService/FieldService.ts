@@ -58,7 +58,7 @@ class FieldService {
         );
     }
 
-    async hundleGameStartedEvent(event: GameStartedEvent) {
+    async handleGameStartedEvent(event: GameStartedEvent) {
         const session = Session.create(event.minutesToPlay, event.startedAt);
 
         const field = Field.create(

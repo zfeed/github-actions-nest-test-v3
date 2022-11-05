@@ -13,6 +13,6 @@ export default class MarkedCellHitEventListner {
     @OnEvent(GameStartedEvent.type, { async: true })
     handle(event: GameStartedEvent) {
         this.serverSentEvents.broadсast(event.gameId, event);
-        return this.fieldService.hundleGameStartedEvent(event);
+        return this.fieldService.handleGameStartedEvent(event);
     }
 }

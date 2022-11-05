@@ -23,7 +23,7 @@ describe('Field', () => {
     test('Field is created', async () => {
         const fieldService = await moduleRef.resolve(FieldService);
 
-        await fieldService.hundleGameStartedEvent(
+        await fieldService.handleGameStartedEvent(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
@@ -45,7 +45,7 @@ describe('Field', () => {
     test('Field is hit', async () => {
         const fieldService = await moduleRef.resolve(FieldService);
 
-        await fieldService.hundleGameStartedEvent(
+        await fieldService.handleGameStartedEvent(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
@@ -77,7 +77,7 @@ describe('Field', () => {
     test("Field's marked cell position is changed", async () => {
         const fieldService = await moduleRef.resolve(FieldService);
 
-        await fieldService.hundleGameStartedEvent(
+        await fieldService.handleGameStartedEvent(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
