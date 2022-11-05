@@ -1,14 +1,14 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import Entity from '../core/domain/common/Entity';
+import BettingEntity from '../core/domain/common/Entity';
 
 export interface IEntity {
-    id: Entity<never>['id'];
+    id: BettingEntity<never>['id'];
 }
 
 export default new EntitySchema<IEntity>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    class: Entity,
+    class: BettingEntity,
     abstract: true,
     properties: {
         id: { type: types.uuid, primary: true }

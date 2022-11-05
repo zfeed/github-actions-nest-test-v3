@@ -2,7 +2,7 @@ interface Event {
     type: string;
 }
 
-class Entity<E extends Event> {
+class BettingEntity<E extends Event> {
     _events: E[] = [];
 
     get events(): ReadonlyArray<E> {
@@ -24,5 +24,5 @@ class Entity<E extends Event> {
     }
 }
 
-export default Entity;
-export { Entity };
+export default BettingEntity;
+export { BettingEntity };

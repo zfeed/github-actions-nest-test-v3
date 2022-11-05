@@ -16,7 +16,7 @@ export default new EntitySchema<IBet, IEntity>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     class: Bet,
-    extends: 'Entity',
+    extends: 'BettingEntity',
     properties: {
         version: { type: 'number', version: true },
         playerIds: { type: types.array },
