@@ -131,7 +131,16 @@ describe('Game', () => {
         expect(game.isFinished()).toBeTrue();
         expect(game.events).toEqual([
             new GameStartedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2']),
-            new GameFinishedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2'], now)
+            new GameFinishedEvent(
+                MINUTES_TO_PLAY,
+                past,
+                '1',
+                [
+                    { id: '1', score: 0 },
+                    { id: '2', score: 0 }
+                ],
+                now
+            )
         ]);
     });
 });
