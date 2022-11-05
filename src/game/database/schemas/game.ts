@@ -19,7 +19,7 @@ export default new EntitySchema<IGame, IEntity>({
         version: { type: 'number', version: true },
         players: { reference: 'embedded', entity: 'Player', array: true },
         maxPlayers: { type: types.smallint, unsigned: true },
-        finishedAt: { type: types.datetime },
+        finishedAt: { type: types.datetime, nullable: true },
         session: {
             reference: 'embedded',
             entity: 'Session',

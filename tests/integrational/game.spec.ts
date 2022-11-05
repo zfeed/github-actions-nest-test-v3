@@ -23,6 +23,7 @@ describe('Game', () => {
         const gameService = await moduleRef.resolve(GameService);
 
         const result = await gameService.create('John');
+        console.log(result);
 
         // assert service response
         expect(result).toEqual({
@@ -36,7 +37,8 @@ describe('Game', () => {
                             name: 'John',
                             score: expect.any(Number)
                         }
-                    ]
+                    ],
+                    finishedAt: null
                 }
             },
             error: null
@@ -86,7 +88,8 @@ describe('Game', () => {
                             name: 'Mike',
                             score: expect.any(Number)
                         }
-                    ]
+                    ],
+                    finishedAt: null
                 },
                 player: {
                     id: expect.any(String),

@@ -20,26 +20,33 @@ export default class GameDTO {
     })
     public readonly session: undefined | SessionDTO;
 
+    @ApiProperty()
+    public readonly finishedAt: string | null;
+
     private constructor(
         id: string,
         maxPlayers: number,
         players: ReadonlyArray<PlayerDTO>,
-        session: undefined | SessionDTO
+        session: undefined | SessionDTO,
+        finishedAt: string | null
     ) {
         this.id = id;
         this.maxPlayers = maxPlayers;
         this.players = players;
         this.session = session;
+        this.finishedAt = finishedAt;
     }
 
     static create(game: Game) {
         const session = game.getSession();
+        const finishedAt = game.getFinishedAt();
 
         return new this(
             game.id,
             game.maxPlayers,
             game.getPlayers().map((player) => PlayerDTO.create(player)),
-            session ? SessionDTO.create(session) : undefined
+            session ? SessionDTO.create(session) : undefined,
+            finishedAt ? finishedAt.toISOString() : finishedAt
         );
     }
 }
