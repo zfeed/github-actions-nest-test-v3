@@ -7,6 +7,6 @@ export default new EntitySchema<Status>({
     class: Status,
     embeddable: true,
     properties: {
-        value: { type: types.string }
+        value: { type: types.smallint }
     }
 });
