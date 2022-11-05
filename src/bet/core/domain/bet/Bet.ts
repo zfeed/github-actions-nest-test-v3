@@ -6,16 +6,12 @@ class Bet extends Entity<BetFinishedEvent> {
     protected constructor(
         id: string,
         public readonly gameId: string,
-        private amount: number,
+        public readonly amount: number,
         public playerIds: ReadonlyArray<string>,
         private winnerPlayerId: string | null,
         private status: Status
     ) {
         super(id);
-    }
-
-    getAmount() {
-        return this.amount;
     }
 
     getStatus() {
@@ -38,7 +34,7 @@ class Bet extends Entity<BetFinishedEvent> {
             new BetFinishedEvent(
                 this.id,
                 this.gameId,
-                this.getAmount(),
+                this.amount,
                 this.playerIds,
                 winnerPlayerId
             )

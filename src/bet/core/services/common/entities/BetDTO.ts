@@ -35,7 +35,7 @@ export default class GameDTO {
     static create(bet: Bet) {
         return new this(
             bet.id,
-            bet.getAmount(),
+            bet.amount,
             bet.playerIds,
             bet.getWinnerPlayerId(),
             bet.getStatus().getValue()
