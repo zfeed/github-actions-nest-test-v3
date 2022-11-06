@@ -1,8 +1,10 @@
 import { EntityManager } from '@mikro-orm/sqlite';
+import { Injectable } from '@nestjs/common';
 import Bet from '../domain/bet/Bet';
 import WinnerService from '../domain/WinnerService';
 import { GameFinishedEvent } from '../../../integration';
 
+@Injectable()
 export default class GameFinishedEventHandler {
     constructor(private em: EntityManager) {}
 
