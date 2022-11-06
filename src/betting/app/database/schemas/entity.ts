@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import BettingEntity from '../../../core/domain/common/Entity';
+import BettingEntity from '../../../core/domain/Entity';
 
 export interface IEntity {
     id: BettingEntity<never>['id'];
