@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { GameStartedEvent } from '../../../integration';
-import BetService from '../../core/services/BetService/BetService';
+import GameStartedEventHandler from '../../core/handlers/GameStartedEventHandler';
 
 @Injectable()
 export default class GameStartedEventListener {
-    constructor(private betService: BetService) {}
+    constructor(private gameStartedEventHandler: GameStartedEventHandler) {}
 
     @OnEvent(GameStartedEvent.type, { async: true })
     handle(event: GameStartedEvent) {
-        this.betService.handleGameStartedEvent(event);
+        this.gameStartedEventHandler.handle(event);
     }
 }
