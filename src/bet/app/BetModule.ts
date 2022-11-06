@@ -5,11 +5,17 @@ import { Module } from '@nestjs/common';
 import GameFinishedEventListener from './listeners/GameFinishedEventListener';
 import GameStartedEventListener from './listeners/GameStartedEventListener';
 
-import BetService from '../core/services/BetService/BetService';
+import GameFinishedEventHandler from '../core/handlers/GameFinishedEventHandler';
+import GameStartedEventHandler from '../core/handlers/GameStartedEventHandler';
 
 @Module({
     imports: [MikroOrmModule.forRoot(), EventEmitterModule.forRoot()],
     controllers: [],
-    providers: [BetService, GameFinishedEventListener, GameStartedEventListener]
+    providers: [
+        GameStartedEventHandler,
+        GameFinishedEventHandler,
+        GameFinishedEventListener,
+        GameStartedEventListener
+    ]
 })
 export default class BetModule {}
