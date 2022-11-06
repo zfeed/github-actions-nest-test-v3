@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import Status from '../core/domain/bet/Status';
+import Status from '../../../core/domain/bet/Status';
 
 export default new EntitySchema<Status>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
