@@ -1,7 +1,8 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import BetService from '../../src/bet/core/services/BetService/BetService';
+import GameStartedEventHandler from '../../src/bet/core/handlers/GameStartedEventHandler';
+import GameFinishedEventHandler from '../../src/bet/core/handlers/GameFinishedEventHandler';
 import Bet from '../../src/bet/core/domain/bet/Bet';
 import Status from '../../src/bet/core/domain/bet/Status';
 import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
@@ -11,7 +12,10 @@ import * as database from '../database';
 let moduleRef: TestingModule;
 
 beforeAll(async () => {
-    moduleRef = await database.createTestingModule(BetService);
+    moduleRef = await database.createTestingModule(
+        GameStartedEventHandler,
+        GameFinishedEventHandler
+    );
 });
 
 afterAll(async () => {
@@ -23,9 +27,11 @@ beforeEach(async () => database.initialize());
 
 describe('Bet', () => {
     test('Bet is created', async () => {
-        const betService = await moduleRef.resolve(BetService);
+        const gameStartedEventHandler = await moduleRef.resolve(
+            GameStartedEventHandler
+        );
 
-        await betService.handleGameStartedEvent(
+        await gameStartedEventHandler.handle(
             new GameStartedEvent(1, new Date(), 'game-id-1', [
                 'player-id-1',
                 'player-id-2'
@@ -46,16 +52,21 @@ describe('Bet', () => {
     });
 
     test('Bet is finished', async () => {
-        const betService = await moduleRef.resolve(BetService);
+        const gameStartedEventHandler = await moduleRef.resolve(
+            GameStartedEventHandler
+        );
+        const gameFinishedEventHandler = await moduleRef.resolve(
+            GameFinishedEventHandler
+        );
 
-        await betService.handleGameStartedEvent(
+        await gameStartedEventHandler.handle(
             new GameStartedEvent(1, new Date(), 'game-id-1', [
                 'player-id-1',
                 'player-id-2'
             ])
         );
 
-        await betService.handleGameFinishedEvent(
+        await gameFinishedEventHandler.handle(
             new GameFinishedEvent(
                 2,
                 new Date(),
