@@ -4,7 +4,7 @@ import FieldMarkedCellPositionChanged from '../../core/domain/field/FieldMarkedC
 import ServerSentEvents from '../ServerSentEvents/ServerSentEvents';
 
 @Injectable()
-export default class FieldMarkedCellPositionChangedListner {
+export default class FieldMarkedCellPositionChangedListener {
     constructor(private serverSentEvents: ServerSentEvents) {}
 
     @OnEvent(FieldMarkedCellPositionChanged.type, { async: true })

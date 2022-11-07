@@ -11,9 +11,9 @@ import FieldService from '../core/services/FieldService/FieldService';
 import GameStartedEventHandler from '../core/handlers/GameStartedEventHandler';
 import MarkedCellHitEventHandler from '../core/handlers/MarkedCellHitEventHandler';
 
-import FieldMarkedCellPositionChangedListner from './listeners/FieldMarkedCellPositionChangedListner';
-import GameStartedEventListner from './listeners/GameStartedEventListner';
-import MarkedCellHitEventListner from './listeners/MarkedCellHitEventListner';
+import FieldMarkedCellPositionChangedListener from './listeners/FieldMarkedCellPositionChangedListener';
+import GameStartedEventListener from './listeners/GameStartedEventListener';
+import MarkedCellHitEventListener from './listeners/MarkedCellHitEventListener';
 
 import ServerSentEvents from './ServerSentEvents/ServerSentEvents';
 
@@ -25,9 +25,9 @@ import ServerSentEvents from './ServerSentEvents/ServerSentEvents';
         FieldService,
         GameStartedEventHandler,
         MarkedCellHitEventHandler,
-        FieldMarkedCellPositionChangedListner,
-        GameStartedEventListner,
-        MarkedCellHitEventListner,
+        FieldMarkedCellPositionChangedListener,
+        GameStartedEventListener,
+        MarkedCellHitEventListener,
         ServerSentEvents
     ]
 })
