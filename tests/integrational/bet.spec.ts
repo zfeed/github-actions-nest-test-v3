@@ -5,8 +5,8 @@ import GameStartedEventHandler from '../../src/betting/core/handlers/GameStarted
 import GameFinishedEventHandler from '../../src/betting/core/handlers/GameFinishedEventHandler';
 import Bet from '../../src/betting/core/domain/bet/Bet';
 import Status from '../../src/betting/core/domain/bet/Status';
-import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
-import GameFinishedEvent from '../../src/game/core/domain/game/GameFinishedEvent';
+import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
+import GameFinishedEvent from '../../src/game/components/game/core/domain/events/GameFinishedEvent';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

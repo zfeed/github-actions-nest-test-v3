@@ -1,11 +1,11 @@
 import * as dayjs from 'dayjs';
 
-import Game from '../../src/game/core/domain/game/Game';
-import Player from '../../src/game/core/domain/game/Player';
-import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
-import GameFinishedEvent from '../../src/game/core/domain/game/GameFinishedEvent';
-import Session from '../../src/game/core/domain/common/Session';
-import { MINUTES_TO_PLAY } from '../../src/game/core/constants';
+import Game from '../../src/game/components/game/core/domain/Game';
+import Player from '../../src/game/components/game/core/domain/Player';
+import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
+import GameFinishedEvent from '../../src/game/components/game/core/domain/events/GameFinishedEvent';
+import Session from '../../src/game/shared/Session';
+import { MINUTES_TO_PLAY } from '../../src/game/shared/constants';
 
 describe('Game', () => {
     test('Game is created', () => {

@@ -1,10 +1,10 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import FieldService from '../../src/game/core/services/FieldService/FieldService';
-import GameStartedEventHandler from '../../src/game/core/handlers/GameStartedEventHandler';
-import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
-import Field from '../../src/game/core/domain/field/Field';
+import FieldService from '../../src/game/components/field/core/services/FieldService';
+import GameStartedEventHandler from '../../src/game/components/field/core/handlers/GameStartedEventHandler';
+import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
+import Field from '../../src/game/components/field/core/domain/Field';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

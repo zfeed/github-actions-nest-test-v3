@@ -1,8 +1,8 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import GameService from '../../src/game/core/services/GameService/GameService';
-import Game from '../../src/game/core/domain/game/Game';
+import GameService from '../../src/game/components/game/core/services/GameService';
+import Game from '../../src/game/components/game/core/domain/Game';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

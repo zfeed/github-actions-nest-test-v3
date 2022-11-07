@@ -2,8 +2,8 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Module } from '@nestjs/common';
 
-import GameFinishedEventListener from './app/listeners/GameFinishedEventListener';
-import GameStartedEventListener from './app/listeners/GameStartedEventListener';
+import GameFinishedEventListener from './infrastructure/listeners/GameFinishedEventListener';
+import GameStartedEventListener from './infrastructure/listeners/GameStartedEventListener';
 
 import GameFinishedEventHandler from './core/handlers/GameFinishedEventHandler';
 import GameStartedEventHandler from './core/handlers/GameStartedEventHandler';

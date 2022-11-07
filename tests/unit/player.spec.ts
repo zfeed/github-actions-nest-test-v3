@@ -1,4 +1,4 @@
-import Player from '../../src/game/core/domain/game/Player';
+import Player from '../../src/game/components/game/core/domain/Player';
 
 describe('Player', () => {
     test('Player is created', () => {

@@ -1,0 +1,59 @@
+import { randomUUID } from 'node:crypto';
+import { Injectable } from '@nestjs/common';
+import { EntityManager } from '@mikro-orm/sqlite';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import Game from '../domain/Game';
+import Player from '../domain/Player';
+import CreateResult from './results/CreateResult';
+import * as JoinResults from './results/JoinResult';
+import { MAX_PLAYERS } from '../../../../shared/constants';
+
+@Injectable()
+class GameService {
+    constructor(
+        private em: EntityManager,
+        private domainEventDispatcher: EventEmitter2
+    ) {}
+
+    async create(playerName: string): Promise<CreateResult> {
+        const gameRepository = this.em.getRepository(Game);
+
+        const player = Player.create(randomUUID(), playerName);
+        const game = Game.create(randomUUID(), player, MAX_PLAYERS);
+
+        await gameRepository.persistAndFlush(game);
+
+        return CreateResult.create(game);
+    }
+
+    async join(playerName: string, gameId: string) {
+        const gameRepository = this.em.getRepository(Game);
+        const game = await gameRepository.findOne(gameId);
+
+        if (!game) {
+            return JoinResults.GameNotFoundResult.create();
+        }
+
+        if (game.isGameStarted()) {
+            return JoinResults.GameAlreadyStartedResult.create();
+        }
+
+        if (game.allPlayersJoined()) {
+            return JoinResults.GameIsFullResult.create();
+        }
+
+        const player = Player.create(randomUUID(), playerName);
+
+        game.join(player, new Date());
+
+        await gameRepository.flush();
+
+        game.events.forEach((event) =>
+            this.domainEventDispatcher.emit(event.type, event)
+        );
+
+        return JoinResults.GameJoinedResult.create(game, player);
+    }
+}
+
+export default GameService;
