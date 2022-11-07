@@ -1,5 +1,5 @@
 import Player from './Player';
-import Entity from '../common/Entity';
+import Entity from '../../../../packages/Entity';
 import Session from '../common/Session';
 import GameStartedEvent from './GameStartedEvent';
 import GameFinishedEvent from './GameFinishedEvent';

@@ -1,4 +1,4 @@
-import Entity from '../Entity';
+import Entity from '../../../../packages/Entity';
 import Status from './Status';
 import BetFinishedEvent from './BetFinishedEvent';
 

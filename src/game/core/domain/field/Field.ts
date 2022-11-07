@@ -1,4 +1,4 @@
-import Entity from '../common/Entity';
+import Entity from '../../../../packages/Entity';
 import Game from '../game/Game';
 import MarkedCellHitEvent from './MarkedCellHitEvent';
 import FieldMarkedCellPositionChanged from './FieldMarkedCellPositionChanged';
