@@ -4,7 +4,6 @@ import { EntityManager } from '@mikro-orm/sqlite';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import Game from '../../domain/game/Game';
 import Player from '../../domain/game/Player';
-import MarkedCellHitEvent from '../../domain/field/MarkedCellHitEvent';
 import CreateResult from './results/CreateResult';
 import * as JoinResults from './results/JoinResult';
 import { MAX_PLAYERS } from '../../constants';
@@ -54,20 +53,6 @@ class GameService {
         );
 
         return JoinResults.GameJoinedResult.create(game, player);
-    }
-
-    async hundleMarkedCellHitEvent(event: MarkedCellHitEvent) {
-        const gameRepository = this.em.getRepository(Game);
-
-        const game = await gameRepository.findOne(event.gameId);
-
-        if (!game) {
-            throw new Error('Game does not exist');
-        }
-
-        game.increasePlayerScore(event.playerId, new Date());
-
-        gameRepository.flush();
     }
 }
 

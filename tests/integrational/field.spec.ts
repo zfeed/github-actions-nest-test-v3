@@ -2,6 +2,7 @@ import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
 import FieldService from '../../src/game/core/services/FieldService/FieldService';
+import GameStartedEventHandler from '../../src/game/core/handlers/GameStartedEventHandler';
 import GameStartedEvent from '../../src/game/core/domain/game/GameStartedEvent';
 import Field from '../../src/game/core/domain/field/Field';
 import * as database from '../database';
@@ -9,7 +10,10 @@ import * as database from '../database';
 let moduleRef: TestingModule;
 
 beforeAll(async () => {
-    moduleRef = await database.createTestingModule(FieldService);
+    moduleRef = await database.createTestingModule(
+        FieldService,
+        GameStartedEventHandler
+    );
 });
 
 afterAll(async () => {
@@ -21,9 +25,11 @@ beforeEach(async () => database.initialize());
 
 describe('Field', () => {
     test('Field is created', async () => {
-        const fieldService = await moduleRef.resolve(FieldService);
+        const gameStartedEventHandler = await moduleRef.resolve(
+            GameStartedEventHandler
+        );
 
-        await fieldService.handleGameStartedEvent(
+        await gameStartedEventHandler.handle(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
@@ -44,8 +50,11 @@ describe('Field', () => {
 
     test('Field is hit', async () => {
         const fieldService = await moduleRef.resolve(FieldService);
+        const gameStartedEventHandler = await moduleRef.resolve(
+            GameStartedEventHandler
+        );
 
-        await fieldService.handleGameStartedEvent(
+        await gameStartedEventHandler.handle(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
@@ -76,8 +85,11 @@ describe('Field', () => {
 
     test("Field's marked cell position is changed", async () => {
         const fieldService = await moduleRef.resolve(FieldService);
+        const gameStartedEventHandler = await moduleRef.resolve(
+            GameStartedEventHandler
+        );
 
-        await fieldService.handleGameStartedEvent(
+        await gameStartedEventHandler.handle(
             new GameStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
