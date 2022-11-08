@@ -1,9 +1,9 @@
 import * as dayjs from 'dayjs';
 
-import Field from '../../src/game/components/field/core/domain/Field';
-import MarkedCellHitEvent from '../../src/game/components/field/core/domain/events/MarkedCellHitEvent';
-import FieldMarkedCellPositionChanged from '../../src/game/components/field/core/domain/events/FieldMarkedCellPositionChanged';
-import Session from '../../src/game/shared/Session';
+import Field from '../../src/contexts/game/components/field/core/domain/Field';
+import MarkedCellHitEvent from '../../src/contexts/game/components/field/core/domain/events/MarkedCellHitEvent';
+import FieldMarkedCellPositionChanged from '../../src/contexts/game/components/field/core/domain/events/FieldMarkedCellPositionChanged';
+import Session from '../../src/contexts/game/shared/Session';
 
 describe('Field', () => {
     test('Field is created', () => {

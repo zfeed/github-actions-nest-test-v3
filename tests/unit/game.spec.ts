@@ -1,11 +1,11 @@
 import * as dayjs from 'dayjs';
 
-import Match from '../../src/game/components/match/core/domain/Match';
-import Player from '../../src/game/components/match/core/domain/Player';
-import MatchStartedEvent from '../../src/game/components/match/core/domain/events/MatchStartedEvent';
-import MatchFinishedEvent from '../../src/game/components/match/core/domain/events/MatchFinishedEvent';
-import Session from '../../src/game/shared/Session';
-import { MINUTES_TO_PLAY } from '../../src/game/shared/constants';
+import Match from '../../src/contexts/game/components/match/core/domain/Match';
+import Player from '../../src/contexts/game/components/match/core/domain/Player';
+import MatchStartedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchStartedEvent';
+import MatchFinishedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchFinishedEvent';
+import Session from '../../src/contexts/game/shared/Session';
+import { MINUTES_TO_PLAY } from '../../src/contexts/game/shared/constants';
 
 describe('Match', () => {
     test('Match is created', () => {

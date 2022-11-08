@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import MatchModule from './game/Module';
-import BettingModule from './betting/Module';
+import MatchModule from './contexts/game/Module';
+import BettingModule from './contexts/betting/Module';
 
 @Module({
     imports: [MatchModule, BettingModule]

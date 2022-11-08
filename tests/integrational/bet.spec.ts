@@ -1,12 +1,12 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import MatchStartedEventHandler from '../../src/betting/core/handlers/MatchStartedEventHandler';
-import MatchFinishedEventHandler from '../../src/betting/core/handlers/MatchFinishedEventHandler';
-import Bet from '../../src/betting/core/domain/bet/Bet';
-import Status from '../../src/betting/core/domain/bet/Status';
-import MatchStartedEvent from '../../src/game/components/match/core/domain/events/MatchStartedEvent';
-import MatchFinishedEvent from '../../src/game/components/match/core/domain/events/MatchFinishedEvent';
+import MatchStartedEventHandler from '../../src/contexts/betting/core/handlers/MatchStartedEventHandler';
+import MatchFinishedEventHandler from '../../src/contexts/betting/core/handlers/MatchFinishedEventHandler';
+import Bet from '../../src/contexts/betting/core/domain/bet/Bet';
+import Status from '../../src/contexts/betting/core/domain/bet/Status';
+import MatchStartedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchStartedEvent';
+import MatchFinishedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchFinishedEvent';
 import * as database from '../database';
 
 let moduleRef: TestingModule;
