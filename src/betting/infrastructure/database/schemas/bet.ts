@@ -4,7 +4,7 @@ import { IEntity } from './entity';
 
 interface IBet {
     id: Bet['id'];
-    gameId: Bet['gameId'];
+    matchId: Bet['matchId'];
     amount: Bet['amount'];
     playerIds: Bet['playerIds'];
     winnerPlayerId: Bet['winnerPlayerId'];
@@ -22,7 +22,7 @@ export default new EntitySchema<IBet, IEntity>({
         playerIds: { type: types.array },
         winnerPlayerId: { type: types.uuid, nullable: true },
         amount: { type: types.smallint },
-        gameId: { type: types.uuid },
+        matchId: { type: types.uuid },
         status: {
             reference: 'embedded',
             entity: 'Status'

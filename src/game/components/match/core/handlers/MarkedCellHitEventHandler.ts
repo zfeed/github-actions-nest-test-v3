@@ -1,6 +1,6 @@
 import { EntityManager } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
-import Game from '../domain/Game';
+import Match from '../domain/Match';
 import MarkedCellHitEvent from '../../../field/core/domain/events/MarkedCellHitEvent';
 
 @Injectable()
@@ -8,16 +8,16 @@ export default class MarkedCellHitEventHandler {
     constructor(private em: EntityManager) {}
 
     async handle(event: MarkedCellHitEvent): Promise<void> {
-        const gameRepository = this.em.getRepository(Game);
+        const matchRepository = this.em.getRepository(Match);
 
-        const game = await gameRepository.findOne(event.gameId);
+        const match = await matchRepository.findOne(event.matchId);
 
-        if (!game) {
-            throw new Error('Game does not exist');
+        if (!match) {
+            throw new Error('Match does not exist');
         }
 
-        game.increasePlayerScore(event.playerId, new Date());
+        match.increasePlayerScore(event.playerId, new Date());
 
-        gameRepository.flush();
+        matchRepository.flush();
     }
 }

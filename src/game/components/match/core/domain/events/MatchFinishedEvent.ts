@@ -1,6 +1,6 @@
-const TYPE = 'GAME_FINISHED' as const;
+const TYPE = 'MATCH_FINISHED' as const;
 
-export default class GameFinishedEvent {
+export default class MatchFinishedEvent {
     static readonly type = TYPE;
 
     public readonly type = TYPE;
@@ -11,21 +11,21 @@ export default class GameFinishedEvent {
 
     public readonly minutesToPlay: number;
 
-    public readonly gameId: string;
+    public readonly matchId: string;
 
     public readonly players: { id: string; score: number }[];
 
     constructor(
         minutesToPlay: number,
         startedAt: Date,
-        gameId: string,
+        matchId: string,
         players: { id: string; score: number }[],
         finishedAt: Date
     ) {
         this.minutesToPlay = minutesToPlay;
         this.startedAt = startedAt;
         this.finishedAt = finishedAt;
-        this.gameId = gameId;
+        this.matchId = matchId;
         this.players = players;
     }
 }

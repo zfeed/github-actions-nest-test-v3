@@ -18,7 +18,7 @@ describe('Field', () => {
 
         expect(field.id).toBe('1');
         expect(field.getPlayerIds()).toEqual(['2', '3']);
-        expect(field.getGameId()).toBe('4');
+        expect(field.getMatchId()).toBe('4');
         expect(field.getSession()).toEqual(Session.create(1, now));
         expect(field.getSize()).toBe(16);
         expect(field.getMarkedCellPosition()).toBeGreaterThanOrEqual(1);

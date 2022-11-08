@@ -9,7 +9,7 @@ class Field extends Entity<
     protected constructor(
         id: Field['id'],
         private playerIds: string[],
-        private gameId: string,
+        private matchId: string,
         private session: Session,
         private markedCellPosition: number,
         private size: number
@@ -39,8 +39,8 @@ class Field extends Entity<
         return this.playerIds;
     }
 
-    getGameId() {
-        return this.gameId;
+    getMatchId() {
+        return this.matchId;
     }
 
     getSession(): Readonly<Session> {
@@ -65,7 +65,7 @@ class Field extends Entity<
         }
 
         if (this.session.isOver(now)) {
-            throw new Error('Game is finished');
+            throw new Error('Match is finished');
         }
 
         const hit = this.markedCellPosition === cellPosition;
@@ -77,14 +77,14 @@ class Field extends Entity<
             );
 
             this.pushEvent(
-                new MarkedCellHitEvent(playerId, this.gameId, cellPosition)
+                new MarkedCellHitEvent(playerId, this.matchId, cellPosition)
             );
         }
     }
 
     changeMarkedCellPosition(now: Date): void {
         if (this.session.isOver(now)) {
-            throw new Error('Game is finished');
+            throw new Error('Match is finished');
         }
 
         this.markedCellPosition = Field.getNextCellPosition(
@@ -95,7 +95,7 @@ class Field extends Entity<
         this.pushEvent(
             new FieldMarkedCellPositionChanged(
                 this.markedCellPosition,
-                this.gameId,
+                this.matchId,
                 this.id
             )
         );
@@ -104,7 +104,7 @@ class Field extends Entity<
     public static create(
         id: Field['id'],
         playerIds: string[],
-        gameId: string,
+        matchId: string,
         size: number,
         session: Session
     ): Field {
@@ -113,7 +113,7 @@ class Field extends Entity<
         return new Field(
             id,
             playerIds,
-            gameId,
+            matchId,
             session,
             markedCellPosition,
             size

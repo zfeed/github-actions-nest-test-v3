@@ -15,7 +15,7 @@ export default class HitPositionInFieldDTO {
     @ApiProperty({
         example: randomUUID(),
         description:
-            'Player identification that can be either achieved by joining or creating a game'
+            'Player identification that can be either achieved by joining or creating a match'
     })
     playerId!: string;
 }

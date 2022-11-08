@@ -1,13 +1,13 @@
 import Player from './Player';
 import Entity from '../../../../../packages/Entity';
 import Session from '../../../../shared/Session';
-import GameStartedEvent from './events/GameStartedEvent';
-import GameFinishedEvent from './events/GameFinishedEvent';
+import MatchStartedEvent from './events/MatchStartedEvent';
+import MatchFinishedEvent from './events/MatchFinishedEvent';
 import { MINUTES_TO_PLAY } from '../../../../shared/constants';
 
-class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
+class Match extends Entity<MatchStartedEvent | MatchFinishedEvent> {
     private constructor(
-        id: Game['id'],
+        id: Match['id'],
         private players: Player[],
         private session: Session | undefined,
         public readonly maxPlayers: number,
@@ -28,7 +28,7 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
         this.session = Session.create(MINUTES_TO_PLAY, now);
 
         this.pushEvent(
-            new GameStartedEvent(
+            new MatchStartedEvent(
                 MINUTES_TO_PLAY,
                 this.session.startedAt,
                 this.id,
@@ -66,24 +66,24 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
         }
 
         if (this.session === undefined) {
-            throw Error('Game not started yet');
+            throw Error('Match not started yet');
         }
 
         if (this.session.isOver(now)) {
-            throw Error('Game is finished');
+            throw Error('Match is finished');
         }
 
         player.increaseScoreBy(1);
     }
 
     // TODO: add this-based type guards
-    isGameStarted() {
+    isMatchStarted() {
         return this.session !== undefined;
     }
 
     join(player: Player, now: Date): void {
-        if (this.isGameStarted()) {
-            throw new Error('Game already started');
+        if (this.isMatchStarted()) {
+            throw new Error('Match already started');
         }
 
         if (this.allPlayersJoined()) {
@@ -106,22 +106,22 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
     }
 
     finish(now: Date) {
-        if (this.isGameStarted() === false) {
-            throw new Error('Game not started yet');
+        if (this.isMatchStarted() === false) {
+            throw new Error('Match not started yet');
         }
 
         if (this.session?.isOver(now) === false) {
-            throw new Error('Game is not over yet');
+            throw new Error('Match is not over yet');
         }
 
         if (this.isFinished() === true) {
-            throw new Error('Game is finished already');
+            throw new Error('Match is finished already');
         }
 
         this.finishedAt = now;
 
         this.pushEvent(
-            new GameFinishedEvent(
+            new MatchFinishedEvent(
                 MINUTES_TO_PLAY,
                 this.session!.startedAt,
                 this.id,
@@ -135,16 +135,16 @@ class Game extends Entity<GameStartedEvent | GameFinishedEvent> {
     }
 
     static create(
-        gameId: Game['id'],
+        matchId: Match['id'],
         player: Player,
         maxPlayers: number
-    ): Game {
+    ): Match {
         if (player.getScore() !== 0) {
             throw new Error('Player must have 0 score');
         }
 
-        return new Game(gameId, [player], undefined, maxPlayers, null);
+        return new Match(matchId, [player], undefined, maxPlayers, null);
     }
 }
 
-export default Game;
+export default Match;

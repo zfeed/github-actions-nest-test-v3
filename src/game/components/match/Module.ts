@@ -2,19 +2,19 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Module } from '@nestjs/common';
 
-import GameController from './infrastructure/controllers/GameController';
-import GameService from './core/services/GameService';
+import MatchController from './infrastructure/controllers/MatchController';
+import MatchService from './core/services/MatchService';
 
 import MarkedCellHitEventHandler from './core/handlers/MarkedCellHitEventHandler';
 import MarkedCellHitEventListener from './infrastructure/listeners/MarkedCellHitEventListener';
 
 @Module({
     imports: [MikroOrmModule.forRoot(), EventEmitterModule.forRoot()],
-    controllers: [GameController],
+    controllers: [MatchController],
     providers: [
-        GameService,
+        MatchService,
         MarkedCellHitEventHandler,
         MarkedCellHitEventListener
     ]
 })
-export default class GameModule {}
+export default class MatchModule {}

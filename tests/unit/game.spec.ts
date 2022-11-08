@@ -1,137 +1,139 @@
 import * as dayjs from 'dayjs';
 
-import Game from '../../src/game/components/game/core/domain/Game';
-import Player from '../../src/game/components/game/core/domain/Player';
-import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
-import GameFinishedEvent from '../../src/game/components/game/core/domain/events/GameFinishedEvent';
+import Match from '../../src/game/components/match/core/domain/Match';
+import Player from '../../src/game/components/match/core/domain/Player';
+import MatchStartedEvent from '../../src/game/components/match/core/domain/events/MatchStartedEvent';
+import MatchFinishedEvent from '../../src/game/components/match/core/domain/events/MatchFinishedEvent';
 import Session from '../../src/game/shared/Session';
 import { MINUTES_TO_PLAY } from '../../src/game/shared/constants';
 
-describe('Game', () => {
-    test('Game is created', () => {
-        const game = Game.create('1', Player.create('1', 'playerName'), 2);
+describe('Match', () => {
+    test('Match is created', () => {
+        const match = Match.create('1', Player.create('1', 'playerName'), 2);
 
-        expect(game.getSession()).toBe(undefined);
-        expect(game.getPlayers()).toEqual([Player.create('1', 'playerName')]);
-        expect(game.id).toBe('1');
-        expect(game.getMaxPlayers()).toBe(2);
+        expect(match.getSession()).toBe(undefined);
+        expect(match.getPlayers()).toEqual([Player.create('1', 'playerName')]);
+        expect(match.id).toBe('1');
+        expect(match.getMaxPlayers()).toBe(2);
     });
 
-    test('Player joined a game the second time', () => {
-        const game = Game.create('1', Player.create('1', 'Mike'), 2);
+    test('Player joined a match the second time', () => {
+        const match = Match.create('1', Player.create('1', 'Mike'), 2);
 
         expect(() =>
-            game.join(Player.create('1', 'Mike'), new Date())
+            match.join(Player.create('1', 'Mike'), new Date())
         ).toThrow();
     });
 
     test('All players joined', () => {
         const now = new Date();
-        const game = Game.create('game123', Player.create('1', 'John'), 2);
+        const match = Match.create('match123', Player.create('1', 'John'), 2);
 
-        game.join(Player.create('2', 'Mike'), now);
+        match.join(Player.create('2', 'Mike'), now);
 
-        expect(game.getSession()).toEqual(Session.create(1, now));
-        expect(game.getPlayers()).toEqual([
+        expect(match.getSession()).toEqual(Session.create(1, now));
+        expect(match.getPlayers()).toEqual([
             Player.create('1', 'John'),
             Player.create('2', 'Mike')
         ]);
-        expect(game.events).toEqual([
-            new GameStartedEvent(1, now, 'game123', ['1', '2'])
+        expect(match.events).toEqual([
+            new MatchStartedEvent(1, now, 'match123', ['1', '2'])
         ]);
     });
 
     test('Max number of players reached', () => {
         const now = new Date();
-        const game = Game.create('game123', Player.create('1', 'John'), 2);
+        const match = Match.create('match123', Player.create('1', 'John'), 2);
 
-        game.join(Player.create('2', 'Mike'), now);
+        match.join(Player.create('2', 'Mike'), now);
 
-        expect(() => game.join(Player.create('3', 'Jeff'), now)).toThrow();
+        expect(() => match.join(Player.create('3', 'Jeff'), now)).toThrow();
     });
 
     test('Player score is increased by 1', () => {
-        const game = Game.create('game123', Player.create('1', 'John'), 2);
-        game.join(Player.create('2', 'Mike'), new Date());
+        const match = Match.create('match123', Player.create('1', 'John'), 2);
+        match.join(Player.create('2', 'Mike'), new Date());
 
-        game.increasePlayerScore('1', new Date());
+        match.increasePlayerScore('1', new Date());
 
-        const player = game.getPlayers().find(({ id }) => id === '1') as Player;
+        const player = match
+            .getPlayers()
+            .find(({ id }) => id === '1') as Player;
         expect(player.getScore()).toBe(1);
     });
 
-    test('Player score is not increased when game is finished', () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
-        game.join(Player.create('2', 'Mike'), new Date());
+    test('Player score is not increased when match is finished', () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
+        match.join(Player.create('2', 'Mike'), new Date());
 
         expect(() =>
-            game.increasePlayerScore('1', dayjs().add(11, 'minute').toDate())
+            match.increasePlayerScore('1', dayjs().add(11, 'minute').toDate())
         ).toThrow();
     });
 
-    test('Player score is not increased when game is not started yet', () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test('Player score is not increased when match is not started yet', () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
 
-        expect(() => game.increasePlayerScore('1', new Date())).toThrow();
+        expect(() => match.increasePlayerScore('1', new Date())).toThrow();
     });
 
     test('Player score is not increased when player has not joined', () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
-        game.join(Player.create('2', 'Mike'), new Date());
+        const match = Match.create('1', Player.create('1', 'John'), 2);
+        match.join(Player.create('2', 'Mike'), new Date());
 
-        expect(() => game.increasePlayerScore('3', new Date())).toThrow();
+        expect(() => match.increasePlayerScore('3', new Date())).toThrow();
     });
 
-    test('Player can not joined when game is already started', () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test('Player can not joined when match is already started', () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
 
-        game.join(Player.create('2', 'Mike'), new Date());
+        match.join(Player.create('2', 'Mike'), new Date());
 
         expect(() =>
-            game.join(Player.create('3', 'Mike'), new Date())
+            match.join(Player.create('3', 'Mike'), new Date())
         ).toThrow();
     });
 
-    test("Game can't be finished if it's not started yet", () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test("Match can't be finished if it's not started yet", () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
 
-        expect(game.getSession()).toBe(undefined);
-        expect(() => game.finish(new Date())).toThrow();
+        expect(match.getSession()).toBe(undefined);
+        expect(() => match.finish(new Date())).toThrow();
     });
 
-    test("Game can't be finished if it's started but not over yet", () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test("Match can't be finished if it's started but not over yet", () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
 
-        game.join(Player.create('2', 'Mike'), new Date());
+        match.join(Player.create('2', 'Mike'), new Date());
 
-        expect(game.getSession()).toBeTruthy();
-        expect(game.getSession()!.isOver(new Date())).toBeFalse();
-        expect(() => game.finish(new Date())).toThrow();
+        expect(match.getSession()).toBeTruthy();
+        expect(match.getSession()!.isOver(new Date())).toBeFalse();
+        expect(() => match.finish(new Date())).toThrow();
     });
 
-    test('Game can be finished only one time', async () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test('Match can be finished only one time', async () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
         const past = dayjs().subtract(MINUTES_TO_PLAY, 'minutes').toDate();
 
-        game.join(Player.create('2', 'Mike'), past);
-        game.finish(new Date());
+        match.join(Player.create('2', 'Mike'), past);
+        match.finish(new Date());
 
-        expect(() => game.finish(new Date())).toThrow();
+        expect(() => match.finish(new Date())).toThrow();
     });
 
-    test('Game finishes correctly', async () => {
-        const game = Game.create('1', Player.create('1', 'John'), 2);
+    test('Match finishes correctly', async () => {
+        const match = Match.create('1', Player.create('1', 'John'), 2);
         const past = dayjs().subtract(MINUTES_TO_PLAY, 'minutes').toDate();
         const now = new Date();
 
-        game.join(Player.create('2', 'Mike'), past);
-        game.finish(now);
+        match.join(Player.create('2', 'Mike'), past);
+        match.finish(now);
 
-        expect(game.getFinishedAt()).toBe(now);
-        expect(game.isFinished()).toBeTrue();
-        expect(game.events).toEqual([
-            new GameStartedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2']),
-            new GameFinishedEvent(
+        expect(match.getFinishedAt()).toBe(now);
+        expect(match.isFinished()).toBeTrue();
+        expect(match.events).toEqual([
+            new MatchStartedEvent(MINUTES_TO_PLAY, past, '1', ['1', '2']),
+            new MatchFinishedEvent(
                 MINUTES_TO_PLAY,
                 past,
                 '1',

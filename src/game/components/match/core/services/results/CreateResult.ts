@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import IResult from '../../../../../../packages/Result';
-import GameDTO from '../dtos/GameDTO';
-import Game from '../../domain/Game';
+import MatchDTO from '../dtos/MatchDTO';
+import Match from '../../domain/Match';
 
 class CreateResultData {
-    @ApiProperty({ type: GameDTO })
-    public readonly game: GameDTO;
+    @ApiProperty({ type: MatchDTO })
+    public readonly match: MatchDTO;
 
-    constructor(game: GameDTO) {
-        this.game = game;
+    constructor(match: MatchDTO) {
+        this.match = match;
     }
 }
 
@@ -28,8 +28,8 @@ export default class CreateResult
         this.error = error;
     }
 
-    static create(game: Game) {
-        const data = new CreateResultData(GameDTO.create(game));
+    static create(match: Match) {
+        const data = new CreateResultData(MatchDTO.create(match));
 
         return new this(data, null);
     }

@@ -3,7 +3,7 @@ import Field from '../../../components/field/core/domain/Field';
 import { IEntity } from './entity';
 
 interface IField {
-    gameId: Field['gameId'];
+    matchId: Field['matchId'];
     size: number;
     markedCellPosition: Field['markedCellPosition'];
     playerIds: Field['playerIds'];
@@ -17,7 +17,7 @@ export default new EntitySchema<IField, IEntity>({
     class: Field,
     extends: 'Entity',
     properties: {
-        gameId: { type: types.uuid },
+        matchId: { type: types.uuid },
         size: { type: types.smallint, unsigned: true },
         markedCellPosition: { type: types.smallint, unsigned: true },
         playerIds: { type: types.array },

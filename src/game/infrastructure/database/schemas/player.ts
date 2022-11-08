@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import Player from '../../../components/game/core/domain/Player';
+import Player from '../../../components/match/core/domain/Player';
 
 interface IPlayer {
     id: Player['id'];

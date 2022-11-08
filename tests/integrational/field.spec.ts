@@ -2,8 +2,8 @@ import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
 import FieldService from '../../src/game/components/field/core/services/FieldService';
-import GameStartedEventHandler from '../../src/game/components/field/core/handlers/GameStartedEventHandler';
-import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
+import MatchStartedEventHandler from '../../src/game/components/field/core/handlers/MatchStartedEventHandler';
+import MatchStartedEvent from '../../src/game/components/match/core/domain/events/MatchStartedEvent';
 import Field from '../../src/game/components/field/core/domain/Field';
 import * as database from '../database';
 
@@ -12,7 +12,7 @@ let moduleRef: TestingModule;
 beforeAll(async () => {
     moduleRef = await database.createTestingModule(
         FieldService,
-        GameStartedEventHandler
+        MatchStartedEventHandler
     );
 });
 
@@ -25,12 +25,12 @@ beforeEach(async () => database.initialize());
 
 describe('Field', () => {
     test('Field is created', async () => {
-        const gameStartedEventHandler = await moduleRef.resolve(
-            GameStartedEventHandler
+        const matchStartedEventHandler = await moduleRef.resolve(
+            MatchStartedEventHandler
         );
 
-        await gameStartedEventHandler.handle(
-            new GameStartedEvent(1, new Date(), '1', ['1', '2'])
+        await matchStartedEventHandler.handle(
+            new MatchStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
         const em = await moduleRef.resolve(EntityManager);
@@ -50,12 +50,12 @@ describe('Field', () => {
 
     test('Field is hit', async () => {
         const fieldService = await moduleRef.resolve(FieldService);
-        const gameStartedEventHandler = await moduleRef.resolve(
-            GameStartedEventHandler
+        const matchStartedEventHandler = await moduleRef.resolve(
+            MatchStartedEventHandler
         );
 
-        await gameStartedEventHandler.handle(
-            new GameStartedEvent(1, new Date(), '1', ['1', '2'])
+        await matchStartedEventHandler.handle(
+            new MatchStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
         const em = await moduleRef.resolve(EntityManager);
@@ -71,7 +71,7 @@ describe('Field', () => {
                 field: {
                     id: field.id,
                     playerIds: ['1', '2'],
-                    gameId: '1',
+                    matchId: '1',
                     markedCellPosition: expect.any(Number),
                     size: expect.any(Number),
                     session: {
@@ -85,12 +85,12 @@ describe('Field', () => {
 
     test("Field's marked cell position is changed", async () => {
         const fieldService = await moduleRef.resolve(FieldService);
-        const gameStartedEventHandler = await moduleRef.resolve(
-            GameStartedEventHandler
+        const matchStartedEventHandler = await moduleRef.resolve(
+            MatchStartedEventHandler
         );
 
-        await gameStartedEventHandler.handle(
-            new GameStartedEvent(1, new Date(), '1', ['1', '2'])
+        await matchStartedEventHandler.handle(
+            new MatchStartedEvent(1, new Date(), '1', ['1', '2'])
         );
 
         const em = await moduleRef.resolve(EntityManager);

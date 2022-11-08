@@ -1,11 +1,11 @@
 import field from './schemas/field';
 import session from './schemas/session';
-import gameEntity from './schemas/entity';
-import game from './schemas/game';
+import matchEntity from './schemas/entity';
+import match from './schemas/match';
 import player from './schemas/player';
 
 const options = {
-    entities: [field, session, gameEntity, game, player]
+    entities: [field, session, matchEntity, match, player]
 };
 
 export default options;

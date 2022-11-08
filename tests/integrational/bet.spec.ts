@@ -1,20 +1,20 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import GameStartedEventHandler from '../../src/betting/core/handlers/GameStartedEventHandler';
-import GameFinishedEventHandler from '../../src/betting/core/handlers/GameFinishedEventHandler';
+import MatchStartedEventHandler from '../../src/betting/core/handlers/MatchStartedEventHandler';
+import MatchFinishedEventHandler from '../../src/betting/core/handlers/MatchFinishedEventHandler';
 import Bet from '../../src/betting/core/domain/bet/Bet';
 import Status from '../../src/betting/core/domain/bet/Status';
-import GameStartedEvent from '../../src/game/components/game/core/domain/events/GameStartedEvent';
-import GameFinishedEvent from '../../src/game/components/game/core/domain/events/GameFinishedEvent';
+import MatchStartedEvent from '../../src/game/components/match/core/domain/events/MatchStartedEvent';
+import MatchFinishedEvent from '../../src/game/components/match/core/domain/events/MatchFinishedEvent';
 import * as database from '../database';
 
 let moduleRef: TestingModule;
 
 beforeAll(async () => {
     moduleRef = await database.createTestingModule(
-        GameStartedEventHandler,
-        GameFinishedEventHandler
+        MatchStartedEventHandler,
+        MatchFinishedEventHandler
     );
 });
 
@@ -27,12 +27,12 @@ beforeEach(async () => database.initialize());
 
 describe('Bet', () => {
     test('Bet is created', async () => {
-        const gameStartedEventHandler = await moduleRef.resolve(
-            GameStartedEventHandler
+        const matchStartedEventHandler = await moduleRef.resolve(
+            MatchStartedEventHandler
         );
 
-        await gameStartedEventHandler.handle(
-            new GameStartedEvent(1, new Date(), 'game-id-1', [
+        await matchStartedEventHandler.handle(
+            new MatchStartedEvent(1, new Date(), 'match-id-1', [
                 'player-id-1',
                 'player-id-2'
             ])
@@ -44,7 +44,7 @@ describe('Bet', () => {
         // assert database state
         const bets = await betRepository.findAll();
         expect(bets[0]!.id).toStrictEqual(expect.any(String));
-        expect(bets[0]!.gameId).toBe('game-id-1');
+        expect(bets[0]!.matchId).toBe('match-id-1');
         expect(bets[0]!.getWinnerPlayerId()).toBe(null);
         expect(bets[0]!.amount).toStrictEqual(0);
         expect(bets[0]!.getStatus()).toEqual(Status.create(Status.code.ACTIVE));
@@ -52,25 +52,25 @@ describe('Bet', () => {
     });
 
     test('Bet is finished', async () => {
-        const gameStartedEventHandler = await moduleRef.resolve(
-            GameStartedEventHandler
+        const matchStartedEventHandler = await moduleRef.resolve(
+            MatchStartedEventHandler
         );
-        const gameFinishedEventHandler = await moduleRef.resolve(
-            GameFinishedEventHandler
+        const matchFinishedEventHandler = await moduleRef.resolve(
+            MatchFinishedEventHandler
         );
 
-        await gameStartedEventHandler.handle(
-            new GameStartedEvent(1, new Date(), 'game-id-1', [
+        await matchStartedEventHandler.handle(
+            new MatchStartedEvent(1, new Date(), 'match-id-1', [
                 'player-id-1',
                 'player-id-2'
             ])
         );
 
-        await gameFinishedEventHandler.handle(
-            new GameFinishedEvent(
+        await matchFinishedEventHandler.handle(
+            new MatchFinishedEvent(
                 2,
                 new Date(),
-                'game-id-1',
+                'match-id-1',
                 [
                     {
                         id: 'player-id-1',
@@ -91,7 +91,7 @@ describe('Bet', () => {
         // assert database state
         const bets = await betRepository.findAll();
         expect(bets[0]!.id).toStrictEqual(expect.any(String));
-        expect(bets[0]!.gameId).toBe('game-id-1');
+        expect(bets[0]!.matchId).toBe('match-id-1');
         expect(bets[0]!.getWinnerPlayerId()).toBeOneOf([
             'player-id-1',
             'player-id-2'

@@ -5,9 +5,9 @@ import { Module } from '@nestjs/common';
 import FieldController from './infrastructure/controllers/FieldController';
 import FieldService from './core/services/FieldService';
 
-import GameStartedEventHandler from './core/handlers/GameStartedEventHandler';
+import MatchStartedEventHandler from './core/handlers/MatchStartedEventHandler';
 
-import GameStartedEventListener from './infrastructure/listeners/GameStartedEventListener';
+import MatchStartedEventListener from './infrastructure/listeners/MatchStartedEventListener';
 import FieldMarkedCellPositionChangedListener from './infrastructure/listeners/FieldMarkedCellPositionChangedListener';
 import ServerSentEventsModule from '../../../packages/ServerSentEvents/Module';
 
@@ -20,8 +20,8 @@ import ServerSentEventsModule from '../../../packages/ServerSentEvents/Module';
     controllers: [FieldController],
     providers: [
         FieldService,
-        GameStartedEventHandler,
-        GameStartedEventListener,
+        MatchStartedEventHandler,
+        MatchStartedEventListener,
         FieldMarkedCellPositionChangedListener
     ]
 })

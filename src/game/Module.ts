@@ -3,7 +3,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Module } from '@nestjs/common';
 
 import FieldModule from './components/field/Module';
-import GameModule from './components/game/Module';
+import MatchModule from './components/match/Module';
 
 import ServerSentEvents from '../packages/ServerSentEvents/ServerSentEvents';
 
@@ -11,7 +11,7 @@ import ServerSentEvents from '../packages/ServerSentEvents/ServerSentEvents';
     imports: [
         MikroOrmModule.forRoot(),
         EventEmitterModule.forRoot(),
-        GameModule,
+        MatchModule,
         FieldModule
     ],
     providers: [ServerSentEvents]

@@ -9,7 +9,7 @@ import * as HitResult from '../../core/services/results/HitResult';
 @ApiExtraModels(
     HitResult.HitResult,
     HitResult.FieldNotFoundResult,
-    HitResult.GameIsOverResult,
+    HitResult.MatchIsOverResult,
     HitResult.PlayerDoesNotExistResult
 )
 export default class FieldController {
@@ -20,7 +20,7 @@ export default class FieldController {
             anyOf: refs(
                 HitResult.HitResult,
                 HitResult.FieldNotFoundResult,
-                HitResult.GameIsOverResult,
+                HitResult.MatchIsOverResult,
                 HitResult.PlayerDoesNotExistResult
             )
         }
@@ -28,7 +28,7 @@ export default class FieldController {
     @ApiParam({
         name: 'id',
         description:
-            'Field identification that is automatically sent to all players once all players joined the game'
+            'Field identification that is automatically sent to all players once all players joined the match'
     })
     @Post(':id/hit')
     hit(@Body() body: HitPositionInFieldDTO, @Param('id') id: string) {

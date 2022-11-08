@@ -2,16 +2,16 @@ import { EntityManager } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import Bet from '../domain/bet/Bet';
 import WinnerService from '../domain/WinnerService';
-import { GameFinishedEvent } from '../../../integration';
+import { MatchFinishedEvent } from '../../../integration';
 
 @Injectable()
-export default class GameFinishedEventHandler {
+export default class MatchFinishedEventHandler {
     constructor(private em: EntityManager) {}
 
-    async handle(event: GameFinishedEvent): Promise<void> {
+    async handle(event: MatchFinishedEvent): Promise<void> {
         const betRepository = this.em.getRepository(Bet);
 
-        const bet = await betRepository.findOne({ gameId: event.gameId });
+        const bet = await betRepository.findOne({ matchId: event.matchId });
 
         if (!bet) {
             throw new Error("Bet doesn't exist");

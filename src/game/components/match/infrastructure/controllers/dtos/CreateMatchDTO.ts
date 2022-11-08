@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export default class CreateGameDTO {
+export default class CreateMatchDTO {
     @ApiProperty({
         example: 'Mark',
         minLength: 0,

@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import Game from '../../domain/Game';
+import Match from '../../domain/Match';
 import PlayerDTO from './PlayerDTO';
 import SessionDTO from '../../../../../shared/SessionDTO';
 import { MAX_PLAYERS } from '../../../../../shared/constants';
 
-export default class GameDTO {
+export default class MatchDTO {
     @ApiProperty()
     public readonly id: string;
     @ApiProperty({ default: MAX_PLAYERS })
@@ -16,7 +16,7 @@ export default class GameDTO {
         type: SessionDTO,
         nullable: true,
         description:
-            "It's populated when all player goined the game and it started"
+            "It's populated when all player goined the match and it started"
     })
     public readonly session: undefined | SessionDTO;
 
@@ -37,14 +37,14 @@ export default class GameDTO {
         this.finishedAt = finishedAt;
     }
 
-    static create(game: Game) {
-        const session = game.getSession();
-        const finishedAt = game.getFinishedAt();
+    static create(match: Match) {
+        const session = match.getSession();
+        const finishedAt = match.getFinishedAt();
 
         return new this(
-            game.id,
-            game.maxPlayers,
-            game.getPlayers().map((player) => PlayerDTO.create(player)),
+            match.id,
+            match.maxPlayers,
+            match.getPlayers().map((player) => PlayerDTO.create(player)),
             session ? SessionDTO.create(session) : undefined,
             finishedAt ? finishedAt.toISOString() : finishedAt
         );

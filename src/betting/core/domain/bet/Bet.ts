@@ -5,7 +5,7 @@ import BetFinishedEvent from './BetFinishedEvent';
 class Bet extends Entity<BetFinishedEvent> {
     protected constructor(
         id: string,
-        public readonly gameId: string,
+        public readonly matchId: string,
         public readonly amount: number,
         public playerIds: ReadonlyArray<string>,
         private winnerPlayerId: string | null,
@@ -33,7 +33,7 @@ class Bet extends Entity<BetFinishedEvent> {
         this.pushEvent(
             new BetFinishedEvent(
                 this.id,
-                this.gameId,
+                this.matchId,
                 this.amount,
                 this.playerIds,
                 winnerPlayerId
@@ -43,13 +43,13 @@ class Bet extends Entity<BetFinishedEvent> {
 
     public static create(
         id: string,
-        gameId: string,
+        matchId: string,
         amount: number,
         playerIds: string[]
     ): Bet {
         const status = Status.create(Status.code.ACTIVE);
 
-        return new Bet(id, gameId, amount, playerIds, null, status);
+        return new Bet(id, matchId, amount, playerIds, null, status);
     }
 }
 

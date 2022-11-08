@@ -10,7 +10,7 @@ export default class FieldDTO {
     playerIds: ReadonlyArray<string>;
 
     @ApiProperty()
-    public readonly gameId: string;
+    public readonly matchId: string;
 
     @ApiProperty()
     public readonly markedCellPosition: number;
@@ -24,14 +24,14 @@ export default class FieldDTO {
     private constructor(
         id: string,
         playerIds: ReadonlyArray<string>,
-        gameId: string,
+        matchId: string,
         markedCellPosition: number,
         size: number,
         session: SessionDTO
     ) {
         this.id = id;
         this.playerIds = playerIds;
-        this.gameId = gameId;
+        this.matchId = matchId;
         this.markedCellPosition = markedCellPosition;
         this.size = size;
         this.session = session;
@@ -41,7 +41,7 @@ export default class FieldDTO {
         return new this(
             field.id,
             [...field.getPlayerIds()],
-            field.getGameId(),
+            field.getMatchId(),
             field.getMarkedCellPosition(),
             field.getSize(),
             SessionDTO.create(field.getSession())

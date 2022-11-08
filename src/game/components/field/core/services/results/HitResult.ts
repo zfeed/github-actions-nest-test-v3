@@ -53,25 +53,25 @@ export class FieldNotFoundResult
     }
 }
 
-const GAME_IS_OVER = 'GAME_IS_OVER' as const;
-type GAME_IS_OVER = typeof GAME_IS_OVER;
+const MATCH_IS_OVER = 'MATCH_IS_OVER' as const;
+type MATCH_IS_OVER = typeof MATCH_IS_OVER;
 
-class GameIsOverError {
-    @ApiProperty({ type: 'string', default: GAME_IS_OVER })
-    id = GAME_IS_OVER;
+class MatchIsOverError {
+    @ApiProperty({ type: 'string', default: MATCH_IS_OVER })
+    id = MATCH_IS_OVER;
 
     @ApiProperty({ type: 'string' })
-    message = 'Game is over';
+    message = 'Match is over';
 }
 
-export class GameIsOverResult
-    implements IResult<null, GameIsOverResult['error']>
+export class MatchIsOverResult
+    implements IResult<null, MatchIsOverResult['error']>
 {
     @ApiProperty({ type: 'null', default: null })
     data = null;
 
-    @ApiProperty({ type: GameIsOverError })
-    error = new GameIsOverError();
+    @ApiProperty({ type: MatchIsOverError })
+    error = new MatchIsOverError();
 
     static create() {
         return new this();
@@ -86,7 +86,7 @@ class PlayerDoesNotExistError {
     id = PLAYER_DOES_NOT_EXIST;
 
     @ApiProperty({ type: 'string' })
-    message = 'Game is over';
+    message = 'Match is over';
 }
 
 export class PlayerDoesNotExistResult

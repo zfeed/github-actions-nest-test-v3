@@ -3,7 +3,7 @@ export default class BetFinishedEvent {
 
     public readonly id: string;
 
-    public readonly gameId: string;
+    public readonly matchId: string;
 
     public readonly amount: number;
 
@@ -13,13 +13,13 @@ export default class BetFinishedEvent {
 
     constructor(
         id: string,
-        gameId: string,
+        matchId: string,
         amount: number,
         playerIds: ReadonlyArray<string>,
         playerWinnerId: string
     ) {
         this.id = id;
-        this.gameId = gameId;
+        this.matchId = matchId;
         this.amount = amount;
         this.playerIds = playerIds;
         this.playerWinnerId = playerWinnerId;

@@ -9,6 +9,6 @@ export default class FieldMarkedCellPositionChangedListener {
 
     @OnEvent(FieldMarkedCellPositionChanged.type, { async: true })
     handle(event: FieldMarkedCellPositionChanged) {
-        this.serverSentEvents.broadсast(event.gameId, event);
+        this.serverSentEvents.broadсast(event.matchId, event);
     }
 }

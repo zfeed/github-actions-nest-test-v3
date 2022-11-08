@@ -1,14 +1,14 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import GameService from '../../src/game/components/game/core/services/GameService';
-import Game from '../../src/game/components/game/core/domain/Game';
+import MatchService from '../../src/game/components/match/core/services/MatchService';
+import Match from '../../src/game/components/match/core/domain/Match';
 import * as database from '../database';
 
 let moduleRef: TestingModule;
 
 beforeAll(async () => {
-    moduleRef = await database.createTestingModule(GameService);
+    moduleRef = await database.createTestingModule(MatchService);
 });
 
 afterAll(async () => {
@@ -18,17 +18,16 @@ afterAll(async () => {
 
 beforeEach(() => database.initialize());
 
-describe('Game', () => {
-    test('Game is created', async () => {
-        const gameService = await moduleRef.resolve(GameService);
+describe('Match', () => {
+    test('Match is created', async () => {
+        const matchService = await moduleRef.resolve(MatchService);
 
-        const result = await gameService.create('John');
-        console.log(result);
+        const result = await matchService.create('John');
 
         // assert service response
         expect(result).toEqual({
             data: {
-                game: {
+                match: {
                     id: expect.any(String),
                     maxPlayers: expect.any(Number),
                     players: [
@@ -45,13 +44,13 @@ describe('Game', () => {
         });
 
         const em = await moduleRef.resolve(EntityManager);
-        const gameRepository = em.getRepository(Game);
+        const matchRepository = em.getRepository(Match);
 
         // assert database state
-        const games = await gameRepository.findAll();
-        expect(games).toHaveLength(1);
-        expect(games[0]?.getPlayers()).toHaveLength(1);
-        expect(games[0]?.getPlayers()).toEqual(
+        const matches = await matchRepository.findAll();
+        expect(matches).toHaveLength(1);
+        expect(matches[0]?.getPlayers()).toHaveLength(1);
+        expect(matches[0]?.getPlayers()).toEqual(
             expect.arrayContaining([
                 {
                     id: expect.any(String),
@@ -62,15 +61,15 @@ describe('Game', () => {
         );
     });
 
-    test('Game is joined by the last player', async () => {
-        const gameService = await moduleRef.resolve(GameService);
-        const created = await gameService.create('John');
+    test('Match is joined by the last player', async () => {
+        const matchService = await moduleRef.resolve(MatchService);
+        const created = await matchService.create('John');
 
         // assert join result
-        const result = await gameService.join('Mike', created.data.game.id);
+        const result = await matchService.join('Mike', created.data.match.id);
         expect(result).toEqual({
             data: {
-                game: {
+                match: {
                     id: expect.any(String),
                     session: {
                         minutesToPlay: expect.any(Number),
@@ -101,13 +100,13 @@ describe('Game', () => {
         });
 
         const em = await moduleRef.resolve(EntityManager);
-        const gameRepository = em.getRepository(Game);
+        const matchRepository = em.getRepository(Match);
 
         // assert database state
-        const games = await gameRepository.findAll();
-        expect(games).toHaveLength(1);
-        expect(games[0]?.getPlayers()).toHaveLength(2);
-        expect(games[0]?.getPlayers()).toEqual([
+        const matches = await matchRepository.findAll();
+        expect(matches).toHaveLength(1);
+        expect(matches[0]?.getPlayers()).toHaveLength(2);
+        expect(matches[0]?.getPlayers()).toEqual([
             {
                 id: expect.any(String),
                 name: 'John',

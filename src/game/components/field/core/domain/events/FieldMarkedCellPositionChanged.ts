@@ -6,17 +6,17 @@ export default class FieldMarkedCellPositionChanged {
 
     public readonly newMarkedCellPosition: number;
 
-    public readonly gameId: string;
+    public readonly matchId: string;
 
     public readonly fieldId: string;
 
     constructor(
         newMarkedCellPosition: number,
-        gameId: string,
+        matchId: string,
         fieldId: string
     ) {
         this.newMarkedCellPosition = newMarkedCellPosition;
-        this.gameId = gameId;
+        this.matchId = matchId;
         this.fieldId = fieldId;
     }
 }

@@ -1,19 +1,19 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import Game from '../../../components/game/core/domain/Game';
+import Match from '../../../components/match/core/domain/Match';
 import { IEntity } from './entity';
 
-interface IGame {
-    players: Game['players'];
-    session: Game['session'];
-    maxPlayers: Game['maxPlayers'];
+interface IMatch {
+    players: Match['players'];
+    session: Match['session'];
+    maxPlayers: Match['maxPlayers'];
     version: number;
-    finishedAt: Game['finishedAt'];
+    finishedAt: Match['finishedAt'];
 }
 
-export default new EntitySchema<IGame, IEntity>({
+export default new EntitySchema<IMatch, IEntity>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    class: Game,
+    class: Match,
     extends: 'Entity',
     properties: {
         version: { type: 'number', version: true },

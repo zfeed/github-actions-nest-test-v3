@@ -2,16 +2,16 @@ import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/sqlite';
 import Bet from '../domain/bet/Bet';
-import { GameStartedEvent } from '../../../integration';
+import { MatchStartedEvent } from '../../../integration';
 
 @Injectable()
-export default class GameStartedEventHandler {
+export default class MatchStartedEventHandler {
     constructor(private em: EntityManager) {}
 
-    async handle(event: GameStartedEvent) {
+    async handle(event: MatchStartedEvent) {
         const betRepository = this.em.getRepository(Bet);
 
-        const bet = Bet.create(randomUUID(), event.gameId, 0, event.playersId);
+        const bet = Bet.create(randomUUID(), event.matchId, 0, event.playersId);
 
         await betRepository.persistAndFlush(bet);
     }

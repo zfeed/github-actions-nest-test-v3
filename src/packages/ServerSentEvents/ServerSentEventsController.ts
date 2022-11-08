@@ -6,8 +6,8 @@ import ServerSentEvents from './ServerSentEvents';
 export default class EventsController {
     constructor(private serverSentEvents: ServerSentEvents) {}
 
-    @Sse('sse/game/:gameId')
-    connectToSSE(@Param('gameId') gameId: string) {
-        return this.serverSentEvents.connect(gameId);
+    @Sse('sse/game/:matchId')
+    connectToSSE(@Param('matchId') matchId: string) {
+        return this.serverSentEvents.connect(matchId);
     }
 }
