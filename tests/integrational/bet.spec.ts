@@ -5,8 +5,8 @@ import MatchStartedEventHandler from '../../src/contexts/betting/core/handlers/M
 import MatchFinishedEventHandler from '../../src/contexts/betting/core/handlers/MatchFinishedEventHandler';
 import Bet from '../../src/contexts/betting/core/domain/bet/Bet';
 import Status from '../../src/contexts/betting/core/domain/bet/Status';
-import MatchStartedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchStartedEvent';
-import MatchFinishedEvent from '../../src/contexts/game/components/match/core/domain/events/MatchFinishedEvent';
+import MatchStartedEvent from '../../src/contexts/gaming/components/match/core/domain/events/MatchStartedEvent';
+import MatchFinishedEvent from '../../src/contexts/gaming/components/match/core/domain/events/MatchFinishedEvent';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

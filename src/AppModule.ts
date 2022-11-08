@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import MatchModule from './contexts/game/Module';
+import MatchModule from './contexts/gaming/Module';
 import BettingModule from './contexts/betting/Module';
 
 @Module({
