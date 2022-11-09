@@ -21,8 +21,10 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
-        indent: ['error', 4],
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+        'import/prefer-default-export': 'off',
+        'import/no-default-export': 'error',
+        'no-useless-constructor': 'off',
         'import/extensions': [
             'error',
             'ignorePackages',

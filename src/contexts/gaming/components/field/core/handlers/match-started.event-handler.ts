@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { EntityManager } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
-import { Field } from '../domain/Field';
+import { Field } from '../domain/field';
 import { MatchStartedEvent } from '../../../match/core/domain/events';
 import { Session } from '../../../../shared/domain';
 import { FIELD_SIZE } from '../../../../shared/constants';

@@ -8,6 +8,7 @@ export class MarkedCellHitEvent {
     public readonly matchId: string;
 
     public readonly type = TYPE;
+
     static readonly type = TYPE;
 
     constructor(playerId: string, matchId: string, cellPosition: number) {

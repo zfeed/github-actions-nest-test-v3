@@ -2,6 +2,7 @@ const TYPE = 'FIELD_MARKED_CELL_POSITION_CHANGED' as const;
 
 export class FieldMarkedCellPositionChangedEvent {
     public readonly type = TYPE;
+
     static readonly type = TYPE;
 
     public readonly newMarkedCellPosition: number;

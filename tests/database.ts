@@ -5,6 +5,7 @@ import { Test } from '@nestjs/testing';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 // TODO: fix it by contributing to mikro-orm/nestjs
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 Scope.DEFAULT = NaN;
 

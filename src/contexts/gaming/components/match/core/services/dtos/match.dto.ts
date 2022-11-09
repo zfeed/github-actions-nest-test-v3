@@ -7,11 +7,13 @@ import { MAX_PLAYERS } from '../../../../../shared/constants';
 export class MatchDTO {
     @ApiProperty()
     public readonly id: string;
+
     @ApiProperty({ default: MAX_PLAYERS })
     public readonly maxPlayers: number;
 
     @ApiProperty({ type: [PlayerDTO] })
     public readonly players: ReadonlyArray<PlayerDTO>;
+
     @ApiProperty({
         type: SessionDTO,
         nullable: true,

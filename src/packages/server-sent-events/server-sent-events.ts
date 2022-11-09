@@ -21,7 +21,7 @@ export class ServerSentEvents {
         namespace: string,
         subscriber: Subscriber<unknown>
     ) {
-        let connection = this.connections.get(namespace);
+        const connection = this.connections.get(namespace);
 
         if (!connection) {
             return;

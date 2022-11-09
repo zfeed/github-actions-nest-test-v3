@@ -4,8 +4,10 @@ import { Player } from '../../domain';
 export class PlayerDTO {
     @ApiProperty()
     public readonly id: string;
+
     @ApiProperty()
     public readonly name: string;
+
     @ApiProperty()
     public readonly score: number;
 

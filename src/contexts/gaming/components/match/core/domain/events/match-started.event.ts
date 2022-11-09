@@ -2,6 +2,7 @@ const TYPE = 'MATCH_STARTED' as const;
 
 export class MatchStartedEvent {
     public readonly type = TYPE;
+
     static readonly type = TYPE;
 
     public readonly startedAt: Date;

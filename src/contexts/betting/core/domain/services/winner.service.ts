@@ -10,8 +10,8 @@ export class WinnerService {
             throw new Error('Players list is empty');
         }
 
-        const winner = players.reduce((winner, player) => {
-            if (player.score > winner!.score) {
+        const winner = players.reduce((item, player) => {
+            if (player.score > item!.score) {
                 return player;
             }
 

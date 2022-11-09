@@ -6,6 +6,7 @@ import { MatchStartedEventHandler } from '../../core/handlers';
 @Injectable()
 export class MatchStartedEventListener {
     constructor(private matchStartedEventHandler: MatchStartedEventHandler) {}
+
     @OnEvent(MatchStartedEvent.type, { async: true })
     handle(event: MatchStartedEvent) {
         return this.matchStartedEventHandler.handle(event);
