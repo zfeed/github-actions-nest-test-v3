@@ -1,16 +1,14 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Event, Entity } from '../../../../packages/domain';
-
-class BettingEntity<E extends Event> extends Entity<E> {}
+import { Entity } from '../../../packages/domain';
 
 export interface IEntity {
-    id: BettingEntity<never>['id'];
+    id: Entity<never>['id'];
 }
 
-export const entitySchema = new EntitySchema<IEntity>({
+export const entity = new EntitySchema<IEntity>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    class: BettingEntity,
+    class: Entity,
     abstract: true,
     properties: {
         id: { type: types.uuid, primary: true }

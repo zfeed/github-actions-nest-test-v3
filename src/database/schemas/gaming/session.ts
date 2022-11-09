@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Session } from '../domain/session';
+import { Session } from '../../../contexts/gaming/shared/domain/session';
 
 export const sessionSchema = new EntitySchema<Session>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

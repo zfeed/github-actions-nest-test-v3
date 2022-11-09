@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Match } from '../../components/match/core/domain';
+import { Match } from '../../../contexts/gaming/components/match/core/domain';
 import { IEntity } from './entity';
 
 interface IMatch {
