@@ -1,8 +1,8 @@
-import { Entity } from '../../../../../packages/domain';
+import { Entity, AggregateRoot } from '../../../../../packages/domain';
 import { Status } from './status';
 import { BetFinishedEvent } from './bet-finished.event';
 
-export class Bet extends Entity<BetFinishedEvent> {
+export class Bet extends Entity<BetFinishedEvent> implements AggregateRoot {
     protected constructor(
         id: string,
         public readonly matchId: string,

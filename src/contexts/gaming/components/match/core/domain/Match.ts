@@ -1,10 +1,13 @@
 import { Player } from './player';
-import { Entity } from '../../../../../../packages/domain';
+import { Entity, AggregateRoot } from '../../../../../../packages/domain';
 import { Session } from '../../../../shared/domain';
 import { MatchStartedEvent, MatchFinishedEvent } from './events';
 import { MINUTES_TO_PLAY } from '../../../../shared/constants';
 
-export class Match extends Entity<MatchStartedEvent | MatchFinishedEvent> {
+export class Match
+    extends Entity<MatchStartedEvent | MatchFinishedEvent>
+    implements AggregateRoot
+{
     private constructor(
         id: Match['id'],
         private players: Player[],

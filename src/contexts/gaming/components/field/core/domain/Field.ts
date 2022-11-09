@@ -1,13 +1,14 @@
-import { Entity } from '../../../../../../packages/domain';
+import { Entity, AggregateRoot } from '../../../../../../packages/domain';
 import {
     FieldMarkedCellPositionChangedEvent,
     MarkedCellHitEvent
 } from './events';
 import { Session } from '../../../../shared/domain';
 
-export class Field extends Entity<
-    MarkedCellHitEvent | FieldMarkedCellPositionChangedEvent
-> {
+export class Field
+    extends Entity<MarkedCellHitEvent | FieldMarkedCellPositionChangedEvent>
+    implements AggregateRoot
+{
     protected constructor(
         id: Field['id'],
         private playerIds: string[],
