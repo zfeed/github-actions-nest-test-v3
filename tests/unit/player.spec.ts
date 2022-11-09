@@ -1,4 +1,4 @@
-import Player from '../../src/contexts/gaming/components/match/core/domain/Player';
+import { Player } from '../../src/contexts/gaming/components/match/core/domain';
 
 describe('Player', () => {
     test('Player is created', () => {

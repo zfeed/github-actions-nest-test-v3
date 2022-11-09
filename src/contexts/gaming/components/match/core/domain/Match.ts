@@ -1,11 +1,10 @@
-import Player from './Player';
-import Entity from '../../../../../../packages/Entity';
-import Session from '../../../../shared/Session';
-import MatchStartedEvent from './events/MatchStartedEvent';
-import MatchFinishedEvent from './events/MatchFinishedEvent';
+import { Player } from './player';
+import { Entity } from '../../../../../../packages/domain';
+import { Session } from '../../../../shared/domain';
+import { MatchStartedEvent, MatchFinishedEvent } from './events';
 import { MINUTES_TO_PLAY } from '../../../../shared/constants';
 
-class Match extends Entity<MatchStartedEvent | MatchFinishedEvent> {
+export class Match extends Entity<MatchStartedEvent | MatchFinishedEvent> {
     private constructor(
         id: Match['id'],
         private players: Player[],
@@ -146,5 +145,3 @@ class Match extends Entity<MatchStartedEvent | MatchFinishedEvent> {
         return new Match(matchId, [player], undefined, maxPlayers, null);
     }
 }
-
-export default Match;

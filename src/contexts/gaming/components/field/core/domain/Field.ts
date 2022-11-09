@@ -1,10 +1,12 @@
-import Entity from '../../../../../../packages/Entity';
-import MarkedCellHitEvent from './events/MarkedCellHitEvent';
-import FieldMarkedCellPositionChanged from './events/FieldMarkedCellPositionChanged';
-import Session from '../../../../shared/Session';
+import { Entity } from '../../../../../../packages/domain';
+import {
+    FieldMarkedCellPositionChangedEvent,
+    MarkedCellHitEvent
+} from './events';
+import { Session } from '../../../../shared/domain';
 
-class Field extends Entity<
-    MarkedCellHitEvent | FieldMarkedCellPositionChanged
+export class Field extends Entity<
+    MarkedCellHitEvent | FieldMarkedCellPositionChangedEvent
 > {
     protected constructor(
         id: Field['id'],
@@ -93,7 +95,7 @@ class Field extends Entity<
         );
 
         this.pushEvent(
-            new FieldMarkedCellPositionChanged(
+            new FieldMarkedCellPositionChangedEvent(
                 this.markedCellPosition,
                 this.matchId,
                 this.id
@@ -120,5 +122,3 @@ class Field extends Entity<
         );
     }
 }
-
-export default Field;

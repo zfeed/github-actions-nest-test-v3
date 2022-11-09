@@ -1,6 +1,6 @@
-import Entity from '../../../../../../packages/Entity';
+import { Entity } from '../../../../../../packages/domain';
 
-class Player extends Entity<never> {
+export class Player extends Entity<never> {
     private score = 0;
 
     public readonly name: string;
@@ -29,5 +29,3 @@ class Player extends Entity<never> {
         this.score += score;
     }
 }
-
-export default Player;

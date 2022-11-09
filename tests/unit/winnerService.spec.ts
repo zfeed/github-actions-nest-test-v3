@@ -1,4 +1,4 @@
-import WinnerService from '../../src/contexts/betting/core/domain/WinnerService';
+import { WinnerService } from '../../src/contexts/betting/core/domain/services';
 
 describe('WinnerService', () => {
     test('Winner is not detected when no players', () => {

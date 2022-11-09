@@ -3,7 +3,7 @@ export enum code {
     FINISHED
 }
 
-class Status {
+export class Status {
     static readonly code = code;
 
     protected constructor(private readonly value: code) {}
@@ -20,5 +20,3 @@ class Status {
         return new Status(value);
     }
 }
-
-export default Status;

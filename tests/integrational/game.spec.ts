@@ -1,8 +1,8 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/sqlite';
-import MatchService from '../../src/contexts/gaming/components/match/core/services/MatchService';
-import Match from '../../src/contexts/gaming/components/match/core/domain/Match';
+import { MatchService } from '../../src/contexts/gaming/components/match/core/services';
+import { Match } from '../../src/contexts/gaming/components/match/core/domain';
 import * as database from '../database';
 
 let moduleRef: TestingModule;

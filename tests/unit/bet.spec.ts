@@ -1,5 +1,4 @@
-import Bet from '../../src/contexts/betting/core/domain/bet/Bet';
-import Status from '../../src/contexts/betting/core/domain/bet/Status';
+import { Bet, Status } from '../../src/contexts/betting/core/domain/bet';
 
 describe('Bet', () => {
     test('Bet is created', () => {

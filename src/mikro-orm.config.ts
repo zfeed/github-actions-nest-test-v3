@@ -1,11 +1,20 @@
 import { Options } from '@mikro-orm/core';
-import bettingConfig from './contexts/betting/infrastructure/database/mikro-orm.config';
-import gameConfig from './contexts/gaming/infrastructure/database/mikro-orm.config';
+import * as betting from './contexts/betting/infrastructure/database-schemas';
+import * as gaming from './contexts/gaming/shared/database-schemas';
 
 const options: Options = {
     type: 'sqlite',
     dbName: process.NODE_ENV === 'test' ? 'humsters.test.db' : 'humsters.db',
-    entities: [...gameConfig.entities, ...bettingConfig.entities]
+    entities: [
+        gaming.entity,
+        gaming.fieldSchema,
+        gaming.matchSchema,
+        gaming.playerSchema,
+        gaming.sessionSchema,
+        betting.betSchema,
+        betting.entitySchema,
+        betting.statusSchema
+    ]
 };
 
 export default options;

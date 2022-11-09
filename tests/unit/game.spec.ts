@@ -1,10 +1,14 @@
 import * as dayjs from 'dayjs';
 
-import Match from '../../src/contexts/gaming/components/match/core/domain/Match';
-import Player from '../../src/contexts/gaming/components/match/core/domain/Player';
-import MatchStartedEvent from '../../src/contexts/gaming/components/match/core/domain/events/MatchStartedEvent';
-import MatchFinishedEvent from '../../src/contexts/gaming/components/match/core/domain/events/MatchFinishedEvent';
-import Session from '../../src/contexts/gaming/shared/Session';
+import {
+    Match,
+    Player
+} from '../../src/contexts/gaming/components/match/core/domain';
+import {
+    MatchStartedEvent,
+    MatchFinishedEvent
+} from '../../src/contexts/gaming/components/match/core/domain/events';
+import { Session } from '../../src/contexts/gaming/shared/domain';
 import { MINUTES_TO_PLAY } from '../../src/contexts/gaming/shared/constants';
 
 describe('Match', () => {

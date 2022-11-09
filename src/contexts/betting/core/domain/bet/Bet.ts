@@ -1,8 +1,8 @@
-import Entity from '../../../../../packages/Entity';
-import Status from './Status';
-import BetFinishedEvent from './BetFinishedEvent';
+import { Entity } from '../../../../../packages/domain';
+import { Status } from './status';
+import { BetFinishedEvent } from './bet-finished.event';
 
-class Bet extends Entity<BetFinishedEvent> {
+export class Bet extends Entity<BetFinishedEvent> {
     protected constructor(
         id: string,
         public readonly matchId: string,
@@ -52,5 +52,3 @@ class Bet extends Entity<BetFinishedEvent> {
         return new Bet(id, matchId, amount, playerIds, null, status);
     }
 }
-
-export default Bet;

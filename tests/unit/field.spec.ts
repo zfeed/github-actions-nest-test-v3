@@ -1,9 +1,11 @@
 import * as dayjs from 'dayjs';
 
-import Field from '../../src/contexts/gaming/components/field/core/domain/Field';
-import MarkedCellHitEvent from '../../src/contexts/gaming/components/field/core/domain/events/MarkedCellHitEvent';
-import FieldMarkedCellPositionChanged from '../../src/contexts/gaming/components/field/core/domain/events/FieldMarkedCellPositionChanged';
-import Session from '../../src/contexts/gaming/shared/Session';
+import { Field } from '../../src/contexts/gaming/components/field/core/domain';
+import {
+    MarkedCellHitEvent,
+    FieldMarkedCellPositionChangedEvent
+} from '../../src/contexts/gaming/components/field/core/domain/events';
+import { Session } from '../../src/contexts/gaming/shared/domain';
 
 describe('Field', () => {
     test('Field is created', () => {
@@ -72,7 +74,7 @@ describe('Field', () => {
         const currentMarkedCellPosition = field.getMarkedCellPosition();
 
         expect(field.events).toEqual([
-            new FieldMarkedCellPositionChanged(
+            new FieldMarkedCellPositionChangedEvent(
                 currentMarkedCellPosition,
                 '4',
                 '1'
