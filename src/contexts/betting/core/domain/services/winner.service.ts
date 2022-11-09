@@ -15,7 +15,7 @@ export class WinnerService {
                 return player;
             }
 
-            return winner;
+            return item;
         }, players[0]) as Player;
 
         return winner;
