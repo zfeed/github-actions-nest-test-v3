@@ -1,6 +1,6 @@
 # Introduction
 
-This project is Proof of Concept and not finished yet. The main purpose is to show how to create modular monolith using DDD practices and cover it with unit tests without pain
+This project is overengineered Proof of Concept and not finished yet. The main purpose is to show how to create modular monolith using DDD practices and cover it with unit tests without pain
 
 # Usage
 
