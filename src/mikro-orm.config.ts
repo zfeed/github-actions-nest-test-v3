@@ -1,6 +1,6 @@
 import { Options } from '@mikro-orm/core';
-import * as betting from './schemas/betting';
-import * as gaming from './schemas/gaming';
+import * as betting from './contexts/betting/infrastructure/database-schemas';
+import * as gaming from './contexts/gaming/database-schemas';
 
 const options: Options = {
     type: 'sqlite',

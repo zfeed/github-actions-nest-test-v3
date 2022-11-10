@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Bet } from '../../../contexts/betting/core/domain/bet';
+import { Bet } from '../../core/domain/bet';
 import { IEntity } from './entity.schema';
 
 interface IBet {

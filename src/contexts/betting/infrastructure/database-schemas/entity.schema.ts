@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Event, Entity } from '../../../packages/domain';
+import { Event, Entity } from '../../../../packages/domain';
 
 class BettingEntity<E extends Event> extends Entity<E> {}
 

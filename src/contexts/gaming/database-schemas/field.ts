@@ -1,5 +1,5 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Field } from '../../../contexts/gaming/components/field/core/domain';
+import { Field } from '../components/field/core/domain';
 import { IEntity } from './entity';
 
 interface IField {
