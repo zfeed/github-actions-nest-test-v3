@@ -1,36 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Introduction
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is Proof of Concept and not finished yet. The main purpose is to show how to create modular monolith using DDD practices and cover it with unit tests without pain
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
+# Usage
 
 ## Running the app
 
@@ -51,23 +23,109 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# integrational tests
+$ npm run test:integrational
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+# System Overview
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Application consists of two bounded contexts:
 
-## Stay in touch
+1. Betting
+2. Gaming
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Betting is responsibly for making bets, finding a winner etc. Gaming is responsible for creating a match, game field, etc.
+Each of the contexts exists on its own ubiquitous language, communication is handler asynchronously by exchanging domain events.
 
-## License
+![Untitled-Page-1 drawio](https://user-images.githubusercontent.com/40887690/201039370-3c6afefc-d829-4df1-b9eb-17dd061224ee.svg)
 
-Nest is [MIT licensed](LICENSE).
+# Contexts
+
+## Gaming
+
+Gaming context is divided in two components:
+
+1. Match
+2. Field
+
+Components are organized around one aggregate root. Synchronization between components is done by exchanging domain events asynchronously. Each component is divided in layers, so we have "vertical" + "horizontal" devision. The purpose of such division is that each component loosely coupled and can be rebuilt/refactored without affection other components
+
+![Untitled-Page-2 drawio (3)](https://user-images.githubusercontent.com/40887690/201042538-168eb5e8-7d75-49d3-9228-32d5c8674e46.svg)
+
+## Betting
+
+Betting context has only one aggregate root, so there is no need to divide it in components. Internal structure is pretty similar to Match or Field components from the Gaming Context. The only difference is that it doesn't have HTTP Controllers at this moment
+
+![Untitled-Page-3 drawio (1)](https://user-images.githubusercontent.com/40887690/201044345-05511a06-f4b8-410e-8cc1-82ee8d91fc17.svg)
+
+# Naming convention
+
+File names MUST follow the following structure:
+
+```text
+{name}.{type}.{extension}
+{name}.{extension}
+```
+
+File names and types MUST me written in kebab-case:
+
+```text
+user.controller.ts
+user.service.ts
+mikro-orm.config.ts
+order-created.event-handler.ts
+```
+
+Class names MUST be written in PascalCase:
+
+```typescript
+class User {
+    /* ... */
+}
+
+class UserService {
+    /* ... */
+}
+
+class ApplicationModule {
+    /* ... */
+}
+
+class OrderCreatedEvent {
+    /* ... */
+}
+```
+
+Constant names MUST be written in PascalCase:
+
+```typescript
+const ACTIVE_STATUS = 1;
+
+const PORT = 443;
+
+process.env.PORT = 80;
+```
+
+Other names MUST be written in camelCase:
+
+```typescript
+const userStatus = 0;
+
+const isActive = true;
+
+const userService = new UserService();
+```
+
+# Library
+
+-   [Domain-Driven Design: Tackling Complexity in the Heart of Software by Eric Evans](https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
+-   [Implementing Domain-Driven Design by Vaughn Vernon](https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577)
+-   [Unit Testing Principles, Practices, and Patterns: Effective testing styles, patterns, and reliable automation for unit testing, mocking, and integration testing with examples in C# 1st Edition by Vladimir Khorikov ](https://www.amazon.com/Unit-Testing-Principles-Practices-Patterns/dp/1617296279)
+-   [Patterns of Enterprise Application Architecture by Martin Fowler](https://www.amazon.com/Patterns-Enterprise-Application-Architecture-Martin/dp/0321127420)
+-   [Vertical Slice Architecture](https://jimmybogard.com/vertical-slice-architecture/)
+-   [Advanced Distributed Systems Design using SOA & DDD](https://udidahan.com/training/)
+-   [Enterprise Craftsmanship Blog](https://enterprisecraftsmanship.com/posts)
+-   [Udi Dahan Blog](https://udidahan.com/?blog=true)
