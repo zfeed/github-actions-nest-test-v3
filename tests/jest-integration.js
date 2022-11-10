@@ -1,7 +1,7 @@
 const baseConfig = require('./jest');
 
 const config = {
-    rootDir: 'integrational'
+    rootDir: 'integration'
 };
 
 module.exports = { ...baseConfig, ...config };

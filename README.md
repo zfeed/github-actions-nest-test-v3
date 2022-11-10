@@ -23,8 +23,8 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# integrational tests
-$ npm run test:integrational
+# integration tests
+$ npm run test:integration
 
 # test coverage
 $ npm run test:cov
