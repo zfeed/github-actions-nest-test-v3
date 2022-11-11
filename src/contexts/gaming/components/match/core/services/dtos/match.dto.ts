@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Match } from '../../domain';
 import { PlayerDTO } from './player.dto';
 import { SessionDTO } from './session.dto';
-import { MAX_PLAYERS } from '../../../../../shared/constants';
+import { MAX_PLAYERS } from '../../constants';
 
 export class MatchDTO {
     @ApiProperty()

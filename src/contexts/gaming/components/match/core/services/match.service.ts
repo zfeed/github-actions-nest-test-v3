@@ -5,7 +5,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Match, Player } from '../domain';
 import { CreateResult } from './results/create.result';
 import * as JoinResults from './results/join.result';
-import { MAX_PLAYERS } from '../../../../shared/constants';
+import { MAX_PLAYERS } from '../constants';
 
 @Injectable()
 export class MatchService {

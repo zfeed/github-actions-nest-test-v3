@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { FIELD_SIZE } from '../../../../../shared/constants';
+import { FIELD_SIZE } from '../../../core/constants';
 
 export class HitPositionInFieldDTO {
     @ApiProperty({

@@ -9,7 +9,7 @@ import {
     MatchStartedEvent,
     MatchFinishedEvent
 } from '../../src/contexts/gaming/components/match/core/domain/events';
-import { MINUTES_TO_PLAY } from '../../src/contexts/gaming/shared/constants';
+import { MINUTES_TO_PLAY } from '../../src/contexts/gaming/components/match/core/constants';
 
 describe('Match', () => {
     test('Match is created', () => {

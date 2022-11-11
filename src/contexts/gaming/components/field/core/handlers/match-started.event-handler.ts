@@ -3,7 +3,7 @@ import { EntityManager } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { Field } from '../domain/field';
 import { MatchStartedEvent } from '../../../match/core/domain/events';
-import { FIELD_SIZE } from '../../../../shared/constants';
+import { FIELD_SIZE } from '../constants';
 
 @Injectable()
 export class MatchStartedEventHandler {

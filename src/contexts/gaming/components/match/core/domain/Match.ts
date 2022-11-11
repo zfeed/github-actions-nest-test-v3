@@ -2,7 +2,7 @@ import { Player } from './player';
 import { Entity, AggregateRoot } from '../../../../../../packages/domain';
 import { Session } from './session';
 import { MatchStartedEvent, MatchFinishedEvent } from './events';
-import { MINUTES_TO_PLAY } from '../../../../shared/constants';
+import { MINUTES_TO_PLAY } from '../constants';
 
 export class Match
     extends Entity<MatchStartedEvent | MatchFinishedEvent>
