@@ -1,6 +1,6 @@
 import { EntitySchema, types } from '@mikro-orm/core';
 import { Bet } from '../../core/domain/bet';
-import { IEntity } from './entity.schema';
+import { IEntity } from '../../../../database/entity.schema';
 
 interface IBet {
     id: Bet['id'];
@@ -16,7 +16,7 @@ export const betSchema = new EntitySchema<IBet, IEntity>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     class: Bet,
-    extends: 'BettingEntity',
+    extends: 'Entity',
     properties: {
         version: { type: 'number', version: true },
         playerIds: { type: types.array },

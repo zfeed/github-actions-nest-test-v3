@@ -1,6 +1,6 @@
 import { EntitySchema, types } from '@mikro-orm/core';
-import { Field } from '../components/field/core/domain';
-import { IEntity } from './entity';
+import { Field } from '../../core/domain';
+import { IEntity } from '../../../../../../database/entity.schema';
 
 interface IField {
     matchId: Field['matchId'];
