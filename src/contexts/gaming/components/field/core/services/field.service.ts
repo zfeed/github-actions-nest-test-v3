@@ -25,7 +25,7 @@ export class FieldService {
             return HitResult.PlayerDoesNotExistResult.create();
         }
 
-        field.hit(index, playerId, new Date());
+        field.hit(index, playerId);
 
         await fieldRepository.flush();
 
@@ -45,7 +45,7 @@ export class FieldService {
             throw new Error('Field does not exist');
         }
 
-        field.changeMarkedCellPosition(new Date());
+        field.changeMarkedCellPosition();
 
         await fieldRepository.flush();
 

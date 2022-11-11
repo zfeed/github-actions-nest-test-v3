@@ -7,7 +7,8 @@ interface IField {
     size: number;
     markedCellPosition: Field['markedCellPosition'];
     playerIds: Field['playerIds'];
-    session: Field['session'];
+    createdAt: Field['createdAt'];
+    finishedAt: Field['finishedAt'];
     version: number;
 }
 
@@ -22,9 +23,7 @@ export const fieldSchema = new EntitySchema<IField, IEntity>({
         markedCellPosition: { type: types.smallint, unsigned: true },
         playerIds: { type: types.array },
         version: { type: 'number', version: true },
-        session: {
-            reference: 'embedded',
-            entity: 'Session'
-        }
+        finishedAt: { type: types.datetime, nullable: true },
+        createdAt: { type: types.datetime, nullable: true }
     }
 });

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Field } from '../../../domain/field';
-import { SessionDTO } from '../../../../../../shared/dtos';
 
 export class FieldDTO {
     @ApiProperty()
@@ -18,8 +17,11 @@ export class FieldDTO {
     @ApiProperty()
     public readonly size: number;
 
-    @ApiProperty({ type: SessionDTO })
-    public readonly session: SessionDTO;
+    @ApiProperty()
+    readonly createdAt: string;
+
+    @ApiProperty()
+    readonly finishedAt: string | null;
 
     private constructor(
         id: string,
@@ -27,24 +29,29 @@ export class FieldDTO {
         matchId: string,
         markedCellPosition: number,
         size: number,
-        session: SessionDTO
+        createdAt: string,
+        finishedAt: string | null
     ) {
         this.id = id;
         this.playerIds = playerIds;
         this.matchId = matchId;
         this.markedCellPosition = markedCellPosition;
         this.size = size;
-        this.session = session;
+        this.createdAt = createdAt;
+        this.finishedAt = finishedAt;
     }
 
     static create(field: Field) {
+        const finishedAt = field.getFinishedAt();
+
         return new this(
             field.id,
             [...field.getPlayerIds()],
             field.getMatchId(),
             field.getMarkedCellPosition(),
             field.getSize(),
-            SessionDTO.create(field.getSession())
+            field.getCreatedAt().toISOString(),
+            finishedAt ? finishedAt.toISOString() : finishedAt
         );
     }
 }

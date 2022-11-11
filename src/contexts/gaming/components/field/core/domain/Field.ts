@@ -3,7 +3,6 @@ import {
     FieldMarkedCellPositionChangedEvent,
     MarkedCellHitEvent
 } from './events';
-import { Session } from '../../../../shared/domain';
 
 export class Field
     extends Entity<MarkedCellHitEvent | FieldMarkedCellPositionChangedEvent>
@@ -13,7 +12,8 @@ export class Field
         id: Field['id'],
         private playerIds: string[],
         private matchId: string,
-        private session: Session,
+        private createdAt: Date,
+        private finishedAt: Date | null,
         private markedCellPosition: number,
         private size: number
     ) {
@@ -46,8 +46,20 @@ export class Field
         return this.matchId;
     }
 
-    getSession(): Readonly<Session> {
-        return this.session;
+    getFinishedAt() {
+        return this.finishedAt;
+    }
+
+    getCreatedAt() {
+        return this.createdAt;
+    }
+
+    finish(now: Date) {
+        if (this.finishedAt !== null) {
+            throw new Error('Match is already finished');
+        }
+
+        this.finishedAt = now;
     }
 
     getSize() {
@@ -62,12 +74,12 @@ export class Field
         return this.playerIds.includes(playerId);
     }
 
-    hit(cellPosition: number, playerId: string, now: Date) {
+    hit(cellPosition: number, playerId: string) {
         if (this.playerExists(playerId) === false) {
             throw new Error('Player does not exits');
         }
 
-        if (this.session.isOver(now)) {
+        if (this.getFinishedAt()) {
             throw new Error('Match is finished');
         }
 
@@ -85,8 +97,8 @@ export class Field
         }
     }
 
-    changeMarkedCellPosition(now: Date): void {
-        if (this.session.isOver(now)) {
+    changeMarkedCellPosition(): void {
+        if (this.getFinishedAt()) {
             throw new Error('Match is finished');
         }
 
@@ -109,7 +121,7 @@ export class Field
         playerIds: string[],
         matchId: string,
         size: number,
-        session: Session
+        createdAt: Date
     ): Field {
         const markedCellPosition = Field.getNextCellPosition(-1, size);
 
@@ -117,7 +129,8 @@ export class Field
             id,
             playerIds,
             matchId,
-            session,
+            createdAt,
+            null,
             markedCellPosition,
             size
         );

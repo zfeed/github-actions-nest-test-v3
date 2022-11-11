@@ -42,10 +42,8 @@ describe('Field', () => {
         expect(fields[0]!.id).toEqual(expect.any(String));
         expect(fields[0]!.getMarkedCellPosition()).toEqual(expect.any(Number));
         expect(fields[0]!.getPlayerIds()).toEqual(['1', '2']);
-        expect(fields[0]!.getSession()).toEqual({
-            minutesToPlay: 1,
-            startedAt: expect.toBeDateString()
-        });
+        expect(fields[0]!.getCreatedAt()).toEqual(expect.toBeDateString());
+        expect(fields[0]!.getFinishedAt()).toEqual(null);
     });
 
     test('Field is hit', async () => {
@@ -74,10 +72,8 @@ describe('Field', () => {
                     matchId: '1',
                     markedCellPosition: expect.any(Number),
                     size: expect.any(Number),
-                    session: {
-                        minutesToPlay: 1,
-                        startedAt: expect.toBeDateString()
-                    }
+                    finishedAt: null,
+                    createdAt: expect.toBeDateString()
                 }
             }
         });
@@ -106,9 +102,7 @@ describe('Field', () => {
         expect(fields[0]!.id).toEqual(expect.any(String));
         expect(fields[0]!.getMarkedCellPosition()).toEqual(expect.any(Number));
         expect(fields[0]!.getPlayerIds()).toEqual(['1', '2']);
-        expect(fields[0]!.getSession()).toEqual({
-            minutesToPlay: 1,
-            startedAt: expect.toBeDateString()
-        });
+        expect(fields[0]!.getCreatedAt()).toEqual(expect.toBeDateString());
+        expect(fields[0]!.getFinishedAt()).toEqual(null);
     });
 });
