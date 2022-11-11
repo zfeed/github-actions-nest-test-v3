@@ -2,13 +2,13 @@ import * as dayjs from 'dayjs';
 
 import {
     Match,
-    Player
+    Player,
+    Session
 } from '../../src/contexts/gaming/components/match/core/domain';
 import {
     MatchStartedEvent,
     MatchFinishedEvent
 } from '../../src/contexts/gaming/components/match/core/domain/events';
-import { Session } from '../../src/contexts/gaming/shared/domain';
 import { MINUTES_TO_PLAY } from '../../src/contexts/gaming/shared/constants';
 
 describe('Match', () => {

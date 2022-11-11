@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Session } from '../domain/session';
-import { MINUTES_TO_PLAY } from '../constants';
+import { Session } from '../../domain/session';
+import { MINUTES_TO_PLAY } from '../../../../../shared/constants';
 
 export class SessionDTO {
     @ApiProperty({ default: MINUTES_TO_PLAY })
