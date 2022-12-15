@@ -5,8 +5,12 @@ import * as gamingMatch from '../contexts/gaming/components/match/infrastructure
 import { entitySchema } from './entity.schema';
 
 const options: Options = {
-    type: 'sqlite',
-    dbName: process.NODE_ENV === 'test' ? 'humsters.test.db' : 'humsters.db',
+    type: 'postgresql',
+    dbName: process.env.POSTGRES_DB,
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    password: process.env.POSTGRES_PASSWORD,
     entities: [
         entitySchema,
         gamingField.fieldSchema,

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
-import { EntityManager } from '@mikro-orm/sqlite';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Match, Player } from '../domain';
 import { CreateResult } from './results/create.result';

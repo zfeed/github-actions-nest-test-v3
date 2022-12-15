@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager } from '@mikro-orm/sqlite';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 import { Field } from '../domain/field';

@@ -37,3 +37,7 @@ lerna-debug.log*
 # SQLite db
 humsters.db
 humsters.test.db
+
+.env
+.env.test
+.env.development

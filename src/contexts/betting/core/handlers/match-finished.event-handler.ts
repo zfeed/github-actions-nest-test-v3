@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/sqlite';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { Bet } from '../domain/bet';
 import { WinnerService } from '../domain/services';

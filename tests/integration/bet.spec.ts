@@ -1,6 +1,7 @@
+import { randomUUID } from 'node:crypto';
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
-import { EntityManager } from '@mikro-orm/sqlite';
+import { EntityManager } from '@mikro-orm/postgresql';
 import {
     MatchFinishedEventHandler,
     MatchStartedEventHandler
@@ -34,10 +35,14 @@ describe('Bet', () => {
             MatchStartedEventHandler
         );
 
+        const matchId = randomUUID();
+        const player1Id = randomUUID();
+        const player2Id = randomUUID();
+
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), 'match-id-1', [
-                'player-id-1',
-                'player-id-2'
+            new MatchStartedEvent(1, new Date(), matchId, [
+                player1Id,
+                player2Id
             ])
         );
 
@@ -47,11 +52,11 @@ describe('Bet', () => {
         // assert database state
         const bets = await betRepository.findAll();
         expect(bets[0]!.id).toStrictEqual(expect.any(String));
-        expect(bets[0]!.matchId).toBe('match-id-1');
+        expect(bets[0]!.matchId).toBe(matchId);
         expect(bets[0]!.getWinnerPlayerId()).toBe(null);
         expect(bets[0]!.amount).toStrictEqual(0);
         expect(bets[0]!.getStatus()).toEqual(Status.create(Status.code.ACTIVE));
-        expect(bets[0]!.playerIds).toEqual(['player-id-1', 'player-id-2']);
+        expect(bets[0]!.playerIds).toEqual([player1Id, player2Id]);
     });
 
     test('Bet is finished', async () => {
@@ -62,10 +67,14 @@ describe('Bet', () => {
             MatchFinishedEventHandler
         );
 
+        const matchId = randomUUID();
+        const player1Id = randomUUID();
+        const player2Id = randomUUID();
+
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), 'match-id-1', [
-                'player-id-1',
-                'player-id-2'
+            new MatchStartedEvent(1, new Date(), matchId, [
+                player1Id,
+                player2Id
             ])
         );
 
@@ -73,14 +82,14 @@ describe('Bet', () => {
             new MatchFinishedEvent(
                 2,
                 new Date(),
-                'match-id-1',
+                matchId,
                 [
                     {
-                        id: 'player-id-1',
+                        id: player1Id,
                         score: 0
                     },
                     {
-                        id: 'player-id-2',
+                        id: player2Id,
                         score: 0
                     }
                 ],
@@ -94,14 +103,11 @@ describe('Bet', () => {
         // assert database state
         const bets = await betRepository.findAll();
         expect(bets[0]!.id).toStrictEqual(expect.any(String));
-        expect(bets[0]!.matchId).toBe('match-id-1');
-        expect(bets[0]!.getWinnerPlayerId()).toBeOneOf([
-            'player-id-1',
-            'player-id-2'
-        ]);
+        expect(bets[0]!.matchId).toBe(matchId);
+        expect(bets[0]!.getWinnerPlayerId()).toBeOneOf([player1Id, player2Id]);
         expect(bets[0]!.getStatus()).toEqual(
             Status.create(Status.code.FINISHED)
         );
-        expect(bets[0]!.playerIds).toEqual(['player-id-1', 'player-id-2']);
+        expect(bets[0]!.playerIds).toEqual([player1Id, player2Id]);
     });
 });

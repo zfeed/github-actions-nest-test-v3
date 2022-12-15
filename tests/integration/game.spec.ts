@@ -1,6 +1,6 @@
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
-import { EntityManager } from '@mikro-orm/sqlite';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { MatchService } from '../../src/contexts/gaming/components/match/core/services';
 import { Match } from '../../src/contexts/gaming/components/match/core/domain';
 import * as database from '../database';
@@ -106,6 +106,21 @@ describe('Match', () => {
         const matches = await matchRepository.findAll();
         expect(matches).toHaveLength(1);
         expect(matches[0]?.getPlayers()).toHaveLength(2);
+        // expect(matches[0]?.getPlayers()).toEqual(
+        //     expect.arrayContaining([
+        //         {
+        //             id: expect.any(String),
+        //             name: 'John',
+        //             score: expect.any(Number)
+        //         },
+        //         {
+        //             id: expect.any(String),
+        //             name: 'Mike',
+        //             score: expect.any(Number)
+        //         }
+        //     ])
+        // );
+
         expect(matches[0]?.getPlayers()).toEqual([
             {
                 id: expect.any(String),
