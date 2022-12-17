@@ -1,6 +1,6 @@
 import { EntitySchema, types } from '@mikro-orm/core';
 import { Bet } from '../../core/domain/bet';
-import { IEntity } from '../../../../database/entity.schema';
+import { IEntity } from '../../../../packages/domain/entity.schema';
 
 interface IBet {
     id: Bet['id'];

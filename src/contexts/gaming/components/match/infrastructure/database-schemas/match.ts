@@ -1,6 +1,6 @@
 import { EntitySchema, types } from '@mikro-orm/core';
 import { Match } from '../../core/domain';
-import { IEntity } from '../../../../../../database/entity.schema';
+import { IEntity } from '../../../../../../packages/domain/entity.schema';
 
 interface IMatch {
     players: Match['players'];

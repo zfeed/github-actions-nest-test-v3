@@ -2,7 +2,7 @@ import { Options } from '@mikro-orm/core';
 import * as betting from '../contexts/betting/infrastructure/database-schemas';
 import * as gamingField from '../contexts/gaming/components/field/infrastructure/database-schemas';
 import * as gamingMatch from '../contexts/gaming/components/match/infrastructure/database-schemas';
-import { entitySchema } from './entity.schema';
+import { entitySchema } from '../packages/domain/entity.schema';
 
 const options: Options = {
     type: 'postgresql',
