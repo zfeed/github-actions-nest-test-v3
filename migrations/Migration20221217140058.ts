@@ -1,9 +1,11 @@
 import { Migration } from '@mikro-orm/migrations';
 
-export class Migration20221215142300 extends Migration {
+export class Migration20221217140058 extends Migration {
 
   async up(): Promise<void> {
     this.addSql('create table "bet" ("id" uuid not null, "version" int not null default 1, "player_ids" text[] not null, "winner_player_id" uuid null, "amount" smallint not null, "match_id" uuid not null, "status_value" smallint not null, constraint "bet_pkey" primary key ("id"));');
+
+    this.addSql('create table "event" ("id" uuid not null, "type" text not null, "json" text not null, "created_at" timestamptz(0) not null, constraint "event_pkey" primary key ("id"));');
 
     this.addSql('create table "field" ("id" uuid not null, "match_id" uuid not null, "size" smallint not null, "marked_cell_position" smallint not null, "player_ids" text[] not null, "version" int not null default 1, "finished_at" timestamptz(0) null, "created_at" timestamptz(0) null, constraint "field_pkey" primary key ("id"));');
 

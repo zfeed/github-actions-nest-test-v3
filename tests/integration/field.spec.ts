@@ -35,7 +35,7 @@ describe('Field', () => {
         );
 
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), matchId, [
+            new MatchStartedEvent(randomUUID(), 1, new Date(), matchId, [
                 player1Id,
                 player2Id
             ])
@@ -66,7 +66,7 @@ describe('Field', () => {
         );
 
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), matchId, [
+            new MatchStartedEvent(randomUUID(), 1, new Date(), matchId, [
                 player1Id,
                 player2Id
             ])
@@ -106,7 +106,7 @@ describe('Field', () => {
         );
 
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), matchId, [
+            new MatchStartedEvent(randomUUID(), 1, new Date(), matchId, [
                 player1Id,
                 player2Id
             ])

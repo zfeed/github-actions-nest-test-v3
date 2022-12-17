@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Match, Player } from '../domain';
+import { Event } from '../../../../../../packages/local-event-storage';
 import { CreateResult } from './results/create.result';
 import * as JoinResults from './results/join.result';
 import { MAX_PLAYERS } from '../constants';
@@ -26,6 +27,7 @@ export class MatchService {
     }
 
     async join(playerName: string, matchId: string) {
+        const eventRepository = this.em.getRepository(Event);
         const matchRepository = this.em.getRepository(Match);
         const match = await matchRepository.findOne(matchId);
 
@@ -43,9 +45,20 @@ export class MatchService {
 
         const player = Player.create(randomUUID(), playerName);
 
-        match.join(player, new Date());
+        match.join(player, new Date(), randomUUID());
 
-        await matchRepository.flush();
+        match.events.forEach((data) => {
+            const event = Event.create(
+                data.id,
+                JSON.stringify(data),
+                data.type,
+                new Date()
+            );
+
+            eventRepository.persist(event);
+        });
+
+        await this.em.flush();
 
         match.events.forEach((event) =>
             this.domainEventDispatcher.emit(event.type, event)

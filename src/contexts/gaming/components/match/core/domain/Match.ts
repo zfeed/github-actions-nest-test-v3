@@ -26,11 +26,12 @@ export class Match
         return this.players.some(({ id }) => id === player.id);
     }
 
-    private start(now: Date): void {
+    private start(now: Date, startEventId: string): void {
         this.session = Session.create(MINUTES_TO_PLAY, now);
 
         this.pushEvent(
             new MatchStartedEvent(
+                startEventId,
                 MINUTES_TO_PLAY,
                 this.session.startedAt,
                 this.id,
@@ -83,7 +84,7 @@ export class Match
         return this.session !== undefined;
     }
 
-    join(player: Player, now: Date): void {
+    join(player: Player, now: Date, startEventId: string): void {
         if (this.isMatchStarted()) {
             throw new Error('Match already started');
         }
@@ -103,11 +104,11 @@ export class Match
         this.players.push(player);
 
         if (this.allPlayersJoined()) {
-            this.start(now);
+            this.start(now, startEventId);
         }
     }
 
-    finish(now: Date) {
+    finish(now: Date, finishEventId: string) {
         if (this.isMatchStarted() === false) {
             throw new Error('Match not started yet');
         }
@@ -124,6 +125,7 @@ export class Match
 
         this.pushEvent(
             new MatchFinishedEvent(
+                finishEventId,
                 MINUTES_TO_PLAY,
                 this.session!.startedAt,
                 this.id,

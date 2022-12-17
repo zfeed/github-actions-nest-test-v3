@@ -1,6 +1,8 @@
 const TYPE = 'MARKED_CELL_HIT' as const;
 
 export class MarkedCellHitEvent {
+    public readonly id: string;
+
     public readonly playerId: string;
 
     public readonly cellPosition: number;
@@ -11,7 +13,13 @@ export class MarkedCellHitEvent {
 
     static readonly type = TYPE;
 
-    constructor(playerId: string, matchId: string, cellPosition: number) {
+    constructor(
+        id: string,
+        playerId: string,
+        matchId: string,
+        cellPosition: number
+    ) {
+        this.id = id;
         this.playerId = playerId;
         this.matchId = matchId;
         this.cellPosition = cellPosition;

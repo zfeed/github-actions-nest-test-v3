@@ -40,7 +40,7 @@ describe('Bet', () => {
         const player2Id = randomUUID();
 
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), matchId, [
+            new MatchStartedEvent(randomUUID(), 1, new Date(), matchId, [
                 player1Id,
                 player2Id
             ])
@@ -72,7 +72,7 @@ describe('Bet', () => {
         const player2Id = randomUUID();
 
         await matchStartedEventHandler.handle(
-            new MatchStartedEvent(1, new Date(), matchId, [
+            new MatchStartedEvent(randomUUID(), 1, new Date(), matchId, [
                 player1Id,
                 player2Id
             ])
@@ -80,6 +80,7 @@ describe('Bet', () => {
 
         await matchFinishedEventHandler.handle(
             new MatchFinishedEvent(
+                randomUUID(),
                 2,
                 new Date(),
                 matchId,

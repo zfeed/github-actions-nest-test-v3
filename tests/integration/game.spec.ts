@@ -67,6 +67,7 @@ describe('Match', () => {
 
         // assert join result
         const result = await matchService.join('Mike', created.data.match.id);
+
         expect(result).toEqual({
             data: {
                 match: {
@@ -106,20 +107,6 @@ describe('Match', () => {
         const matches = await matchRepository.findAll();
         expect(matches).toHaveLength(1);
         expect(matches[0]?.getPlayers()).toHaveLength(2);
-        // expect(matches[0]?.getPlayers()).toEqual(
-        //     expect.arrayContaining([
-        //         {
-        //             id: expect.any(String),
-        //             name: 'John',
-        //             score: expect.any(Number)
-        //         },
-        //         {
-        //             id: expect.any(String),
-        //             name: 'Mike',
-        //             score: expect.any(Number)
-        //         }
-        //     ])
-        // );
 
         expect(matches[0]?.getPlayers()).toEqual([
             {

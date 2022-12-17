@@ -1,13 +1,14 @@
 export interface Event {
+    id: string;
     type: string;
 }
 
 class Entity<E extends Event> {
-    #events: E[] = [];
+    private _events: E[] = [];
 
     get events(): ReadonlyArray<E> {
         // eslint-disable-next-line no-underscore-dangle
-        return this.#events;
+        return this._events;
     }
 
     // eslint-disable-next-line no-useless-constructor
@@ -18,13 +19,13 @@ class Entity<E extends Event> {
         // so setting default value "_event = []" doesn't work
         // It's possible to pass forceCOnstructor: true, but it produces many more bugs
         // eslint-disable-next-line no-underscore-dangle
-        if (this.#events === undefined) {
+        if (this._events === undefined) {
             // eslint-disable-next-line no-underscore-dangle
-            this.#events = [];
+            this._events = [];
         }
 
         // eslint-disable-next-line no-underscore-dangle
-        this.#events.push(event);
+        this._events.push(event);
     }
 }
 

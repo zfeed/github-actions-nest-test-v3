@@ -1,6 +1,8 @@
 const TYPE = 'MATCH_STARTED' as const;
 
 export class MatchStartedEvent {
+    public readonly id: string;
+
     public readonly type = TYPE;
 
     static readonly type = TYPE;
@@ -14,11 +16,13 @@ export class MatchStartedEvent {
     public readonly playersId: string[];
 
     constructor(
+        id: string,
         minutesToPlay: number,
         startedAt: Date,
         matchId: string,
         playersId: string[]
     ) {
+        this.id = id;
         this.minutesToPlay = minutesToPlay;
         this.startedAt = startedAt;
         this.matchId = matchId;

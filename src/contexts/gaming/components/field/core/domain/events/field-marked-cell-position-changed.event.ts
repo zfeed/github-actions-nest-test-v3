@@ -1,6 +1,8 @@
 const TYPE = 'FIELD_MARKED_CELL_POSITION_CHANGED' as const;
 
 export class FieldMarkedCellPositionChangedEvent {
+    public readonly id: string;
+
     public readonly type = TYPE;
 
     static readonly type = TYPE;
@@ -12,10 +14,12 @@ export class FieldMarkedCellPositionChangedEvent {
     public readonly fieldId: string;
 
     constructor(
+        id: string,
         newMarkedCellPosition: number,
         matchId: string,
         fieldId: string
     ) {
+        this.id = id;
         this.newMarkedCellPosition = newMarkedCellPosition;
         this.matchId = matchId;
         this.fieldId = fieldId;

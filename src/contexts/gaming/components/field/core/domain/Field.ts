@@ -74,7 +74,7 @@ export class Field
         return this.playerIds.includes(playerId);
     }
 
-    hit(cellPosition: number, playerId: string) {
+    hit(cellPosition: number, playerId: string, hitEventId: string) {
         if (this.playerExists(playerId) === false) {
             throw new Error('Player does not exits');
         }
@@ -92,12 +92,17 @@ export class Field
             );
 
             this.pushEvent(
-                new MarkedCellHitEvent(playerId, this.matchId, cellPosition)
+                new MarkedCellHitEvent(
+                    hitEventId,
+                    playerId,
+                    this.matchId,
+                    cellPosition
+                )
             );
         }
     }
 
-    changeMarkedCellPosition(): void {
+    changeMarkedCellPosition(positionChangedEventId: string): void {
         if (this.getFinishedAt()) {
             throw new Error('Match is finished');
         }
@@ -109,6 +114,7 @@ export class Field
 
         this.pushEvent(
             new FieldMarkedCellPositionChangedEvent(
+                positionChangedEventId,
                 this.markedCellPosition,
                 this.matchId,
                 this.id

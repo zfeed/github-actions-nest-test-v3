@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import * as dayjs from 'dayjs';
 
 import { Field } from '../../src/contexts/gaming/components/field/core/domain';
@@ -22,13 +23,14 @@ describe('Field', () => {
     });
 
     test("Field's marked cell is hit", () => {
+        const eventId = randomUUID();
         const field = Field.create('1', ['2', '3'], '4', 16, new Date());
         const markedCellPosition = field.getMarkedCellPosition();
 
-        field.hit(markedCellPosition, '2');
+        field.hit(markedCellPosition, '2', eventId);
 
         expect(field.events).toEqual([
-            new MarkedCellHitEvent('2', '4', markedCellPosition)
+            new MarkedCellHitEvent(eventId, '2', '4', markedCellPosition)
         ]);
         expect(field.getMarkedCellPosition()).not.toBe(markedCellPosition);
         expect(field.getMarkedCellPosition()).toBeGreaterThanOrEqual(1);
@@ -38,19 +40,21 @@ describe('Field', () => {
     test("Field's marked cell is hit by player that doesn't exit", () => {
         const field = Field.create('1', ['2', '3'], '4', 16, new Date());
 
-        expect(() => field.hit(3, '4')).toThrow();
+        expect(() => field.hit(3, '4', randomUUID())).toThrow();
     });
 
     test("Field's marked cell position changed", () => {
+        const eventId = randomUUID();
         const field = Field.create('1', ['2', '3'], '4', 16, new Date());
         const previousMarkedCellPosition = field.getMarkedCellPosition();
 
-        field.changeMarkedCellPosition();
+        field.changeMarkedCellPosition(eventId);
 
         const currentMarkedCellPosition = field.getMarkedCellPosition();
 
         expect(field.events).toEqual([
             new FieldMarkedCellPositionChangedEvent(
+                eventId,
                 currentMarkedCellPosition,
                 '4',
                 '1'
@@ -66,7 +70,7 @@ describe('Field', () => {
 
         field.finish(dayjs().add(2, 'minutes').toDate());
 
-        expect(() => field.hit(1, '2')).toThrow();
+        expect(() => field.hit(1, '2', randomUUID())).toThrow();
     });
 
     test("Field's marked cell position can't be changed when match is over", () => {
@@ -74,6 +78,6 @@ describe('Field', () => {
 
         field.finish(dayjs().add(2, 'minutes').toDate());
 
-        expect(() => field.changeMarkedCellPosition()).toThrow();
+        expect(() => field.changeMarkedCellPosition(randomUUID())).toThrow();
     });
 });
