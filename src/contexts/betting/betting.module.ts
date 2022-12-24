@@ -14,12 +14,7 @@ import {
 
 @Module({
     imports: [MikroOrmModule.forRoot(), EventEmitterModule.forRoot()],
-    controllers: [],
-    providers: [
-        MatchStartedEventHandler,
-        MatchFinishedEventHandler,
-        MatchFinishedEventListener,
-        MatchStartedEventListener
-    ]
+    controllers: [MatchFinishedEventListener, MatchStartedEventListener],
+    providers: [MatchStartedEventHandler, MatchFinishedEventHandler]
 })
 export class BettingModule {}

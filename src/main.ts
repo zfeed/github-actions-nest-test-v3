@@ -1,9 +1,22 @@
 import { NestFactory } from '@nestjs/core';
+import { Transport } from '@nestjs/microservices';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function main() {
     const app = await NestFactory.create(AppModule);
+
+    app.connectMicroservice({
+        transport: Transport.KAFKA,
+        options: {
+            client: {
+                clientId: 'humsters',
+                brokers: ['localhost:9093']
+            }
+        }
+    });
+
+    await app.startAllMicroservices();
 
     const config = new DocumentBuilder()
         .setTitle('Humsters Game')

@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import { MESSAGE_BUS, Client } from '../../../../../../packages/message-bus';
 
 import { Field } from '../domain/field';
 import { Event } from '../../../../../../packages/local-event-storage';
@@ -11,7 +11,7 @@ import * as HitResult from './results/hit.result';
 export class FieldService {
     constructor(
         private em: EntityManager,
-        private domainEventDispatcher: EventEmitter2
+        @Inject(MESSAGE_BUS) private bus: Client
     ) {}
 
     async hit(fieldId: string, index: number, playerId: string) {
@@ -43,9 +43,7 @@ export class FieldService {
 
         await this.em.flush();
 
-        field.events.forEach((event) =>
-            this.domainEventDispatcher.emit(event.type, event)
-        );
+        field.events.forEach((event) => this.bus.emit(event.type, event));
 
         return HitResult.HitResult.create(field);
     }
@@ -75,8 +73,6 @@ export class FieldService {
 
         await this.em.flush();
 
-        field.events.forEach((event) =>
-            this.domainEventDispatcher.emit(event.type, event)
-        );
+        field.events.forEach((event) => this.bus.emit(event.type, event));
     }
 }

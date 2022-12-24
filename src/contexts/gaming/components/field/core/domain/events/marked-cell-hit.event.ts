@@ -1,15 +1,13 @@
+import { BaseEvent } from '../../../../../../../packages/domain';
+
 const TYPE = 'MARKED_CELL_HIT' as const;
 
-export class MarkedCellHitEvent {
-    public readonly id: string;
-
+export class MarkedCellHitEvent extends BaseEvent<typeof TYPE> {
     public readonly playerId: string;
 
     public readonly cellPosition: number;
 
     public readonly matchId: string;
-
-    public readonly type = TYPE;
 
     static readonly type = TYPE;
 
@@ -19,7 +17,8 @@ export class MarkedCellHitEvent {
         matchId: string,
         cellPosition: number
     ) {
-        this.id = id;
+        super(id, TYPE);
+
         this.playerId = playerId;
         this.matchId = matchId;
         this.cellPosition = cellPosition;

@@ -14,17 +14,19 @@ import {
 
 import { ServerSentEventsModule } from '../../../../packages/server-sent-events';
 
+import { MessageBus } from '../../../../packages/message-bus';
+
 @Module({
     imports: [
         MikroOrmModule.forRoot(),
         EventEmitterModule.forRoot(),
-        ServerSentEventsModule
+        ServerSentEventsModule,
+        MessageBus
     ],
-    controllers: [FieldController],
+    controllers: [FieldController, MatchStartedEventListener],
     providers: [
         FieldService,
         MatchStartedEventHandler,
-        MatchStartedEventListener,
         FieldMarkedCellPositionChangedListener
     ]
 })

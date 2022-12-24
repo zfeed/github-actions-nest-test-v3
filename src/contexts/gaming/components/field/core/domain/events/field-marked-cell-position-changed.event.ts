@@ -1,10 +1,10 @@
+import { BaseEvent } from '../../../../../../../packages/domain';
+
 const TYPE = 'FIELD_MARKED_CELL_POSITION_CHANGED' as const;
 
-export class FieldMarkedCellPositionChangedEvent {
-    public readonly id: string;
-
-    public readonly type = TYPE;
-
+export class FieldMarkedCellPositionChangedEvent extends BaseEvent<
+    typeof TYPE
+> {
     static readonly type = TYPE;
 
     public readonly newMarkedCellPosition: number;
@@ -19,7 +19,7 @@ export class FieldMarkedCellPositionChangedEvent {
         matchId: string,
         fieldId: string
     ) {
-        this.id = id;
+        super(id, TYPE);
         this.newMarkedCellPosition = newMarkedCellPosition;
         this.matchId = matchId;
         this.fieldId = fieldId;

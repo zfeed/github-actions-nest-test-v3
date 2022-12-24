@@ -2,13 +2,22 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { Match } from '../domain/match';
 import { MarkedCellHitEvent } from '../../../field/core/domain/events';
+import { BaseEventHandler } from '../../../../../../packages/domain';
 
 @Injectable()
-export class MarkedCellHitEventHandler {
-    constructor(private em: EntityManager) {}
+export class MarkedCellHitEventHandler extends BaseEventHandler {
+    constructor(private em: EntityManager) {
+        super();
+    }
 
-    async handle(event: MarkedCellHitEvent): Promise<void> {
-        const matchRepository = this.em.getRepository(Match);
+    async handle(event: MarkedCellHitEvent) {
+        await this.tryToHandle(this.handleEvent.bind(this), event);
+    }
+
+    async handleEvent(event: MarkedCellHitEvent): Promise<void> {
+        const em = this.em.fork();
+
+        const matchRepository = em.getRepository(Match);
 
         const match = await matchRepository.findOne(event.matchId);
 

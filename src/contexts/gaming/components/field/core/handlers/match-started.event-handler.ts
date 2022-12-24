@@ -4,12 +4,21 @@ import { Injectable } from '@nestjs/common';
 import { Field } from '../domain/field';
 import { MatchStartedEvent } from '../../../match/core/domain/events';
 import { FIELD_SIZE } from '../constants';
+import { BaseEventHandler } from '../../../../../../packages/domain';
 
 @Injectable()
-export class MatchStartedEventHandler {
-    constructor(private em: EntityManager) {}
+export class MatchStartedEventHandler extends BaseEventHandler {
+    constructor(private em: EntityManager) {
+        super();
+    }
 
-    async handle(event: MatchStartedEvent): Promise<void> {
+    async handle(event: MatchStartedEvent) {
+        await this.tryToHandle(this.handleEvent.bind(this), event);
+    }
+
+    private async handleEvent(event: MatchStartedEvent): Promise<void> {
+        const em = this.em.fork();
+
         const field = Field.create(
             randomUUID(),
             event.playersId,
@@ -18,7 +27,7 @@ export class MatchStartedEventHandler {
             new Date()
         );
 
-        const fieldRepository = this.em.getRepository(Field);
+        const fieldRepository = em.getRepository(Field);
 
         await fieldRepository.persistAndFlush(field);
     }

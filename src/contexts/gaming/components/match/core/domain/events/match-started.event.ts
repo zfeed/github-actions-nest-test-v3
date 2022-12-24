@@ -1,10 +1,8 @@
+import { Event } from '../../../../../../../packages/domain/event';
+
 const TYPE = 'MATCH_STARTED' as const;
 
-export class MatchStartedEvent {
-    public readonly id: string;
-
-    public readonly type = TYPE;
-
+export class MatchStartedEvent extends Event<typeof TYPE> {
     static readonly type = TYPE;
 
     public readonly startedAt: Date;
@@ -22,7 +20,7 @@ export class MatchStartedEvent {
         matchId: string,
         playersId: string[]
     ) {
-        this.id = id;
+        super(id, TYPE);
         this.minutesToPlay = minutesToPlay;
         this.startedAt = startedAt;
         this.matchId = matchId;

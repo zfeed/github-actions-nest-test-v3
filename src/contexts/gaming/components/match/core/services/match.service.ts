@@ -1,18 +1,18 @@
 import { randomUUID } from 'node:crypto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Match, Player } from '../domain';
 import { Event } from '../../../../../../packages/local-event-storage';
 import { CreateResult } from './results/create.result';
 import * as JoinResults from './results/join.result';
 import { MAX_PLAYERS } from '../constants';
+import { MESSAGE_BUS, Client } from '../../../../../../packages/message-bus';
 
 @Injectable()
 export class MatchService {
     constructor(
         private em: EntityManager,
-        private domainEventDispatcher: EventEmitter2
+        @Inject(MESSAGE_BUS) private bus: Client
     ) {}
 
     async create(playerName: string): Promise<CreateResult> {
@@ -60,9 +60,10 @@ export class MatchService {
 
         await this.em.flush();
 
-        match.events.forEach((event) =>
-            this.domainEventDispatcher.emit(event.type, event)
-        );
+        match.events.forEach((event) => {
+            // TODO: on error log, on success acknowledge
+            this.bus.emit(event.type, event);
+        });
 
         return JoinResults.MatchJoinedResult.create(match, player);
     }
