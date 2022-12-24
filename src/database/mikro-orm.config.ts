@@ -4,6 +4,7 @@ import * as gamingField from '../contexts/gaming/components/field/infrastructure
 import * as gamingMatch from '../contexts/gaming/components/match/infrastructure/database-schemas';
 import { entitySchema } from '../packages/domain/entity.schema';
 import { eventSchema } from '../packages/local-event-storage';
+import { idempotencyKeySchema } from '../packages/idempotency-key';
 
 const options: Options = {
     type: 'postgresql',
@@ -21,7 +22,8 @@ const options: Options = {
         gamingMatch.sessionSchema,
         betting.betSchema,
         betting.statusSchema,
-        eventSchema
+        eventSchema,
+        idempotencyKeySchema
     ]
 };
 

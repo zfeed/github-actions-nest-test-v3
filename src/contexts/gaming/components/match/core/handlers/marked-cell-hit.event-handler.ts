@@ -1,8 +1,10 @@
+import { randomUUID } from 'node:crypto';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { Match } from '../domain/match';
 import { MarkedCellHitEvent } from '../../../field/core/domain/events';
 import { BaseEventHandler } from '../../../../../../packages/domain';
+import { IdempotencyKey } from '../../../../../../packages/idempotency-key';
 
 @Injectable()
 export class MarkedCellHitEventHandler extends BaseEventHandler {
@@ -18,6 +20,7 @@ export class MarkedCellHitEventHandler extends BaseEventHandler {
         const em = this.em.fork();
 
         const matchRepository = em.getRepository(Match);
+        const idempotencyKeyRepository = em.getRepository(IdempotencyKey);
 
         const match = await matchRepository.findOne(event.matchId);
 
@@ -27,6 +30,15 @@ export class MarkedCellHitEventHandler extends BaseEventHandler {
 
         match.increasePlayerScore(event.playerId, new Date());
 
-        matchRepository.flush();
+        const idempotencyKey = IdempotencyKey.create(
+            randomUUID(),
+            event.id,
+            event.type,
+            new Date()
+        );
+
+        idempotencyKeyRepository.persist(idempotencyKey);
+
+        await em.flush();
     }
 }

@@ -4,6 +4,7 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { Bet } from '../domain/bet';
 import { MatchStartedEvent } from '../../../gaming';
 import { BaseEventHandler } from '../../../../packages/domain';
+import { IdempotencyKey } from '../../../../packages/idempotency-key';
 
 @Injectable()
 export class MatchStartedEventHandler extends BaseEventHandler {
@@ -19,9 +20,20 @@ export class MatchStartedEventHandler extends BaseEventHandler {
         const em = this.em.fork();
 
         const betRepository = em.getRepository(Bet);
+        const idempotencyKeyRepository = em.getRepository(IdempotencyKey);
 
         const bet = Bet.create(randomUUID(), event.matchId, 0, event.playersId);
 
-        await betRepository.persistAndFlush(bet);
+        const idempotencyKey = IdempotencyKey.create(
+            randomUUID(),
+            event.id,
+            event.type,
+            new Date()
+        );
+
+        idempotencyKeyRepository.persist(idempotencyKey);
+        betRepository.persist(bet);
+
+        await em.flush();
     }
 }

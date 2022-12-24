@@ -5,6 +5,7 @@ import { Field } from '../domain/field';
 import { MatchStartedEvent } from '../../../match/core/domain/events';
 import { FIELD_SIZE } from '../constants';
 import { BaseEventHandler } from '../../../../../../packages/domain';
+import { IdempotencyKey } from '../../../../../../packages/idempotency-key';
 
 @Injectable()
 export class MatchStartedEventHandler extends BaseEventHandler {
@@ -28,7 +29,18 @@ export class MatchStartedEventHandler extends BaseEventHandler {
         );
 
         const fieldRepository = em.getRepository(Field);
+        const idempotencyKeyRepository = em.getRepository(IdempotencyKey);
 
-        await fieldRepository.persistAndFlush(field);
+        const idempotencyKey = IdempotencyKey.create(
+            randomUUID(),
+            event.id,
+            event.type,
+            new Date()
+        );
+
+        idempotencyKeyRepository.persist(idempotencyKey);
+        fieldRepository.persist(field);
+
+        await em.flush();
     }
 }
