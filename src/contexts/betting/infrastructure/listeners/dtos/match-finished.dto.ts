@@ -1,13 +1,22 @@
-export interface MatchFinishedDTO {
-    readonly id: string;
+import { IsString, IsInt, IsDateString, ValidateNested } from 'class-validator';
+import { PlayerDTO } from './player.dto';
 
-    readonly startedAt: string;
+export class MatchFinishedDTO {
+    @IsString()
+    readonly id!: string;
 
-    readonly finishedAt: string;
+    @IsDateString()
+    readonly startedAt!: string;
 
-    readonly minutesToPlay: number;
+    @IsDateString()
+    readonly finishedAt!: string;
 
-    readonly matchId: string;
+    @IsInt()
+    readonly minutesToPlay!: number;
 
-    readonly players: { id: string; score: number }[];
+    @IsString()
+    readonly matchId!: string;
+
+    @ValidateNested({ each: true })
+    readonly players!: PlayerDTO[];
 }

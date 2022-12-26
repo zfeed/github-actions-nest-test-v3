@@ -1,8 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Controller, ValidationPipe, Body } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { MatchStartedEvent } from '../../../match/core/domain/events';
 import { MatchStartedEventHandler } from '../../core/handlers';
-import { Message } from '../../../../../../packages/message-bus';
 import { MatchStartedDTO } from './dtos';
 
 @Controller()
@@ -10,9 +9,7 @@ export class MatchStartedEventListener {
     constructor(private matchStartedEventHandler: MatchStartedEventHandler) {}
 
     @EventPattern(MatchStartedEvent.type)
-    async handle(message: Message) {
-        const data = message.value as unknown as MatchStartedDTO;
-
+    async handle(@Body('value', new ValidationPipe()) data: MatchStartedDTO) {
         const event = new MatchStartedEvent(
             data.id,
             data.minutesToPlay,

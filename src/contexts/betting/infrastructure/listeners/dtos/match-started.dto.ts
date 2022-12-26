@@ -1,11 +1,18 @@
-export interface MatchStartedDTO {
-    readonly id: string;
+import { IsString, IsInt, IsDateString } from 'class-validator';
 
-    readonly startedAt: string;
+export class MatchStartedDTO {
+    @IsString()
+    readonly id!: string;
 
-    readonly minutesToPlay: number;
+    @IsDateString()
+    readonly startedAt!: string;
 
-    readonly matchId: string;
+    @IsInt()
+    readonly minutesToPlay!: number;
 
-    readonly playersId: string[];
+    @IsString()
+    readonly matchId!: string;
+
+    @IsString()
+    readonly playersId!: string[];
 }

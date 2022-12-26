@@ -1,9 +1,15 @@
-export interface FieldMarkedCellPositionChangedDTO {
-    readonly id: string;
+import { IsString, IsInt } from 'class-validator';
 
-    readonly newMarkedCellPosition: number;
+export class FieldMarkedCellPositionChangedDTO {
+    @IsString()
+    readonly id!: string;
 
-    readonly matchId: string;
+    @IsInt()
+    readonly newMarkedCellPosition!: number;
 
-    readonly fieldId: string;
+    @IsString()
+    readonly matchId!: string;
+
+    @IsString()
+    readonly fieldId!: string;
 }
