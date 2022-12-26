@@ -13,6 +13,6 @@ export class MatchStartedDTO {
     @IsString()
     readonly matchId!: string;
 
-    @IsString()
+    @IsString({ each: true })
     readonly playersId!: string[];
 }
