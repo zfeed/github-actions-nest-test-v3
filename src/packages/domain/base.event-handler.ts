@@ -38,6 +38,7 @@ export abstract class BaseEventHandler {
             try {
                 // eslint-disable-next-line no-await-in-loop
                 await func(event);
+                break;
             } catch (e: unknown) {
                 if (this.isEventAlreadyHandled(e)) {
                     this.logger.warn(
