@@ -27,7 +27,7 @@ export class MatchStartedEventHandler extends BaseEventHandler {
         const idempotencyKey = IdempotencyKey.create(
             randomUUID(),
             event.id,
-            event.type,
+            `betting_${event.type}`,
             new Date()
         );
 

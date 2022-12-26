@@ -33,7 +33,7 @@ export class MarkedCellHitEventHandler extends BaseEventHandler {
         const idempotencyKey = IdempotencyKey.create(
             randomUUID(),
             event.id,
-            event.type,
+            `match_${event.type}`,
             new Date()
         );
 
