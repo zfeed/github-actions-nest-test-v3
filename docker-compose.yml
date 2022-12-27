@@ -57,6 +57,13 @@ services:
             - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
         depends_on:
             - zookeeper
+    redpanda:
+        restart: always
+        image: docker.redpanda.com/vectorized/console:latest
+        ports:
+            - ${REDPANDA_CONSOLE_PORT}:8080
+        environment:
+            - KAFKA_BROKERS=kafka:9092
 volumes:
     postgres-data:
     zookeeper-data:
