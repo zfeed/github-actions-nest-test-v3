@@ -13,6 +13,7 @@ import {
 } from './infrastructure/listeners';
 
 import { ServerSentEventsModule } from '../../../../packages/server-sent-events';
+import { EventAcknowledger } from '../../../../packages/local-event-storage';
 
 import { MessageBus } from '../../../../packages/message-bus';
 
@@ -23,11 +24,11 @@ import { MessageBus } from '../../../../packages/message-bus';
         ServerSentEventsModule,
         MessageBus
     ],
-    controllers: [FieldController, MatchStartedEventListener],
-    providers: [
-        FieldService,
-        MatchStartedEventHandler,
+    controllers: [
+        FieldController,
+        MatchStartedEventListener,
         FieldMarkedCellPositionChangedListener
-    ]
+    ],
+    providers: [FieldService, MatchStartedEventHandler, EventAcknowledger]
 })
 export class FieldModule {}

@@ -4,14 +4,18 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { MESSAGE_BUS, Client } from '../../../../../../packages/message-bus';
 
 import { Field } from '../domain/field';
-import { Event } from '../../../../../../packages/local-event-storage';
+import {
+    Event,
+    EventAcknowledger
+} from '../../../../../../packages/local-event-storage';
 import * as HitResult from './results/hit.result';
 
 @Injectable()
 export class FieldService {
     constructor(
         private em: EntityManager,
-        @Inject(MESSAGE_BUS) private bus: Client
+        @Inject(MESSAGE_BUS) private bus: Client,
+        private eventAcknowledger: EventAcknowledger
     ) {}
 
     async hit(fieldId: string, index: number, playerId: string) {
@@ -30,20 +34,30 @@ export class FieldService {
 
         field.hit(index, playerId, randomUUID());
 
+        const persistedEventsMap = new Map<string, Event>();
+
         field.events.forEach((data) => {
             const event = Event.create(
                 data.id,
                 JSON.stringify(data),
                 data.type,
+                null,
                 new Date()
             );
+
+            persistedEventsMap.set(event.id, event);
 
             eventRepository.persist(event);
         });
 
         await this.em.flush();
 
-        field.events.forEach((event) => this.bus.emit(event.type, event));
+        field.events.forEach((event) => {
+            const observable = this.bus.emit(event.type, event);
+            const persistedEvent = persistedEventsMap.get(event.id) as Event;
+
+            this.eventAcknowledger.acknowledge(observable, persistedEvent);
+        });
 
         return HitResult.HitResult.create(field);
     }
@@ -60,19 +74,29 @@ export class FieldService {
 
         field.changeMarkedCellPosition(randomUUID());
 
+        const persistedEventsMap = new Map<string, Event>();
+
         field.events.forEach((data) => {
             const event = Event.create(
                 data.id,
                 JSON.stringify(data),
                 data.type,
+                null,
                 new Date()
             );
+
+            persistedEventsMap.set(event.id, event);
 
             eventRepository.persist(event);
         });
 
         await this.em.flush();
 
-        field.events.forEach((event) => this.bus.emit(event.type, event));
+        field.events.forEach((event) => {
+            const observable = this.bus.emit(event.type, event);
+            const persistedEvent = persistedEventsMap.get(event.id) as Event;
+
+            this.eventAcknowledger.acknowledge(observable, persistedEvent);
+        });
     }
 }

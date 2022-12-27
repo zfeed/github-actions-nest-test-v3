@@ -6,6 +6,7 @@ import { MessageBus } from '../../../../packages/message-bus';
 
 import { MatchController } from './infrastructure/controllers';
 import { MatchService } from './core/services';
+import { EventAcknowledger } from '../../../../packages/local-event-storage';
 
 import { MarkedCellHitEventHandler } from './core/handlers';
 import { MarkedCellHitEventListener } from './infrastructure/listeners';
@@ -17,6 +18,6 @@ import { MarkedCellHitEventListener } from './infrastructure/listeners';
         MessageBus
     ],
     controllers: [MatchController, MarkedCellHitEventListener],
-    providers: [MatchService, MarkedCellHitEventHandler]
+    providers: [MatchService, MarkedCellHitEventHandler, EventAcknowledger]
 })
 export class MatchModule {}

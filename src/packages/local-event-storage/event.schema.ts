@@ -9,6 +9,7 @@ export const eventSchema = new EntitySchema({
         id: { type: types.uuid, nullable: false, primary: true },
         type: { type: types.text, nullable: false },
         json: { type: types.text, nullable: false },
+        acknowledgedAt: { type: types.datetime, nullable: true },
         createdAt: { type: types.datetime }
     }
 });

@@ -3,6 +3,7 @@ export class Event {
         readonly id: string,
         readonly json: string,
         readonly type: string,
+        readonly acknowledgedAt: Date | null,
         readonly createdAt: Date
     ) {}
 
@@ -10,8 +11,9 @@ export class Event {
         id: string,
         json: string,
         type: string,
+        acknowledgedAt: Date | null,
         createdAt: Date
     ) {
-        return new Event(id, json, type, createdAt);
+        return new Event(id, json, type, acknowledgedAt, createdAt);
     }
 }
