@@ -1,4 +1,5 @@
 import { ClientsModule, Transport, ClientKafka } from '@nestjs/microservices';
+import { kafka } from '../../configs';
 
 export { KafkaMessage as Message } from '@nestjs/microservices/external/kafka.interface';
 
@@ -12,13 +13,7 @@ export const MessageBus = ClientsModule.register([
         transport: Transport.KAFKA,
         options: {
             producerOnlyMode: true,
-            client: {
-                clientId: 'humsters',
-                brokers: ['localhost:9093']
-            },
-            consumer: {
-                groupId: 'humsters-consumer'
-            }
+            ...kafka
         }
     }
 ]);

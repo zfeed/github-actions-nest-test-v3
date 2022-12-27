@@ -2,27 +2,23 @@ import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { kafka, swagger } from './configs';
 
 async function main() {
     const app = await NestFactory.create(AppModule);
 
     app.connectMicroservice({
         transport: Transport.KAFKA,
-        options: {
-            client: {
-                clientId: 'humsters',
-                brokers: ['localhost:9093']
-            }
-        }
+        options: kafka
     });
 
     await app.startAllMicroservices();
 
     const config = new DocumentBuilder()
-        .setTitle('Humsters Game')
-        .setDescription('')
-        .setVersion('0.1.0')
-        .addTag('Public API')
+        .setTitle(swagger.title)
+        .setDescription(swagger.description)
+        .setVersion(swagger.version)
+        .addTag(swagger.tag)
         .build();
 
     const document = SwaggerModule.createDocument(app, config);

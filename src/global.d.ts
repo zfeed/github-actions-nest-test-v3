@@ -12,5 +12,6 @@ declare namespace NodeJS {
         POSTGRES_USER: string;
         POSTGRES_DB: string;
         POSTGRES_PORT: string;
+        KAFKA_BROKER0: string;
     }
 }
