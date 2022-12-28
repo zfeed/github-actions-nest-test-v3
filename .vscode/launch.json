@@ -21,6 +21,10 @@
             "type": "pwa-node",
             "request": "attach",
             "name": "Attach to local NestJS",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "remoteRoot": "/usr/src/app", 
             "skipFiles": [
                 "<node_internals>/**"
             ],
