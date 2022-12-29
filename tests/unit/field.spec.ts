@@ -33,8 +33,8 @@ describe('Field', () => {
             new MarkedCellHitEvent(eventId, '2', '4', markedCellPosition)
         ]);
         expect(field.getMarkedCellPosition()).not.toBe(markedCellPosition);
-        expect(field.getMarkedCellPosition()).toBeGreaterThanOrEqual(1);
-        expect(field.getMarkedCellPosition()).toBeLessThanOrEqual(16);
+        expect(field.getMarkedCellPosition()).toBeGreaterThanOrEqual(0);
+        expect(field.getMarkedCellPosition()).toBeLessThanOrEqual(15);
     });
 
     test("Field's marked cell is hit by player that doesn't exit", () => {
