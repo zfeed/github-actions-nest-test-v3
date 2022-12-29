@@ -8,7 +8,7 @@ class Entity<E extends Event> {
 
     get events(): ReadonlyArray<E> {
         // eslint-disable-next-line no-underscore-dangle
-        return this._events;
+        return this._events || [];
     }
 
     // eslint-disable-next-line no-useless-constructor

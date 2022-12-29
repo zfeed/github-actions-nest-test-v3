@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { Observable } from 'rxjs';
 import { MikroORM } from '@mikro-orm/core';
 import { TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/postgresql';
@@ -6,14 +7,18 @@ import { FieldService } from '../../src/contexts/gaming/components/field/core/se
 import { MatchStartedEventHandler } from '../../src/contexts/gaming/components/field/core/handlers';
 import { MatchStartedEvent } from '../../src/contexts/gaming/components/match/core/domain/events';
 import { Field } from '../../src/contexts/gaming/components/field/core/domain';
+import { EventAcknowledger } from '../../src/packages/local-event-storage';
 import * as database from '../database';
+import { MESSAGE_BUS, Client } from '../../src/packages/message-bus';
 
 let moduleRef: TestingModule;
+let busEmitMock: jest.SpyInstance<Observable<unknown>>;
 
 beforeAll(async () => {
     moduleRef = await database.createTestingModule(
         FieldService,
-        MatchStartedEventHandler
+        MatchStartedEventHandler,
+        EventAcknowledger
     );
 });
 
@@ -22,7 +27,19 @@ afterAll(async () => {
     await mikroorm.close();
 });
 
-beforeEach(async () => database.initialize());
+beforeEach(async () => {
+    await database.initialize();
+
+    const bus = await moduleRef.resolve<Client>(MESSAGE_BUS);
+
+    if (busEmitMock) {
+        busEmitMock.mockReset();
+    }
+
+    busEmitMock = jest
+        .spyOn(bus, 'emit')
+        .mockImplementation(() => new Observable(() => undefined));
+});
 
 describe('Field', () => {
     test('Field is created', async () => {
@@ -73,11 +90,18 @@ describe('Field', () => {
         );
 
         const em = await moduleRef.resolve(EntityManager);
+
         const fieldRepository = em.getRepository(Field);
 
         const field = (await fieldRepository.findAll())[0] as Field;
 
-        const result = await fieldService.hit(field.id, 0, player1Id);
+        const result = await fieldService.hit(
+            field.id,
+            field.getMarkedCellPosition(),
+            player1Id
+        );
+
+        expect(busEmitMock.mock.calls.length).toBe(1);
 
         expect(result).toEqual({
             error: null,
@@ -121,6 +145,7 @@ describe('Field', () => {
 
         const fields = await fieldRepository.findAll();
 
+        expect(busEmitMock.mock.calls.length).toBe(1);
         expect(fields).toHaveLength(1);
         expect(fields[0]!.id).toEqual(expect.any(String));
         expect(fields[0]!.getMarkedCellPosition()).toEqual(expect.any(Number));

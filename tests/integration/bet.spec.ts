@@ -12,13 +12,15 @@ import {
     MatchFinishedEvent
 } from '../../src/contexts/gaming/components/match/core/domain/events';
 import * as database from '../database';
+import { EventAcknowledger } from '../../src/packages/local-event-storage';
 
 let moduleRef: TestingModule;
 
 beforeAll(async () => {
     moduleRef = await database.createTestingModule(
         MatchStartedEventHandler,
-        MatchFinishedEventHandler
+        MatchFinishedEventHandler,
+        EventAcknowledger
     );
 });
 

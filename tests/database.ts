@@ -2,7 +2,7 @@ import { Scope, Provider } from '@nestjs/common';
 import { MikroORM } from '@mikro-orm/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Test } from '@nestjs/testing';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { MessageBus } from '../src/packages/message-bus';
 
 // TODO: fix it by contributing to mikro-orm/nestjs
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -11,7 +11,7 @@ Scope.DEFAULT = NaN;
 
 export function createTestingModule(...providers: Provider[]) {
     const compiled = Test.createTestingModule({
-        imports: [MikroOrmModule.forRoot(), EventEmitterModule.forRoot()],
+        imports: [MikroOrmModule.forRoot(), MessageBus],
         controllers: [],
         providers
     }).compile();
