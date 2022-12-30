@@ -1,36 +1,26 @@
 module.exports = {
-    env: {
-        node: true,
-        es2022: true
-    },
-    settings: {
-        'import/resolver': {
-            node: {
-                extensions: ['.js', '.jsx', '.ts', '.tsx']
-            }
-        }
-    },
-    extends: [
-        'airbnb-base',
-        'plugin:@typescript-eslint/recommended',
-        'prettier'
-    ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
+      project: 'tsconfig.json',
+      tsconfigRootDir : __dirname, 
+      sourceType: 'module',
     },
+    plugins: ['@typescript-eslint/eslint-plugin'],
+    extends: [
+      'plugin:@typescript-eslint/recommended',
+      'plugin:prettier/recommended',
+    ],
+    root: true,
+    env: {
+      node: true,
+      jest: true,
+    },
+    ignorePatterns: ['.eslintrc.js'],
     rules: {
-        'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-        'import/prefer-default-export': 'off',
-        'import/no-default-export': 'error',
-        'no-useless-constructor': 'off',
-        'import/extensions': [
-            'error',
-            'ignorePackages',
-            {
-                ts: 'never'
-            }
-        ]
-    }
-};
+      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  };
+  
