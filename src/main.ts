@@ -1,31 +1,29 @@
-import { NestFactory } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import { kafka, swagger } from './configs';
+import * as f from './packages/domain';
 
-async function main() {
-    const app = await NestFactory.create(AppModule);
+console.log(f);
 
-    app.connectMicroservice({
-        transport: Transport.KAFKA,
-        options: kafka
-    });
+// async function main() {
+//     const app = await NestFactory.create(AppModule);
 
-    await app.startAllMicroservices();
+//     app.connectMicroservice({
+//         transport: Transport.KAFKA,
+//         options: kafka
+//     });
 
-    const config = new DocumentBuilder()
-        .setTitle(swagger.title)
-        .setDescription(swagger.description)
-        .setVersion(swagger.version)
-        .addTag(swagger.tag)
-        .build();
+//     await app.startAllMicroservices();
 
-    const document = SwaggerModule.createDocument(app, config);
+//     const config = new DocumentBuilder()
+//         .setTitle(swagger.title)
+//         .setDescription(swagger.description)
+//         .setVersion(swagger.version)
+//         .addTag(swagger.tag)
+//         .build();
 
-    SwaggerModule.setup('api', app, document);
+//     const document = SwaggerModule.createDocument(app, config);
 
-    await app.listen(process.env.APP_PORT);
-}
+//     SwaggerModule.setup('api', app, document);
 
-main();
+//     await app.listen(process.env.APP_PORT);
+// }
+
+// main();
